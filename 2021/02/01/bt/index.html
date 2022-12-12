@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<title>如何用家里的破旧电脑搭建一台BT离线服务器 | Neko Alternate Blog</title>
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+    <meta name="generator" content="Hexo 5.4.2"></head>
+    <body>
+        <div class="container">
+            <header>
+<div class="main">
+<div class="title">
+    <a href="#" class="logo">Neko Alternate Blog</a>
+</div>
+<div class="site-nav">
+    <ul id="menu" class="menu">
+    
+        <li class="menu-item text-underline">
+            <a href="/">Home</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/archives">Archives</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/about/">About</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/link/">Menu.Link</a>
+        </li>
+            
+    </ul>
+</div>
+</div>
+</header>
+            <main class="main">
+                <section class="posts clearfix">
+<div class="post-wrapper">
+    <article class="post article-entry">
+    <div class="post-title">
+        如何用家里的破旧电脑搭建一台BT离线服务器
+    </div>
+    <p class="sub">2月 01 2021</p>
+    <div class="post-content">
+        <blockquote>
+<p>玩linux就宛如拿着炸弹修理化粪池<br>你永远不知道你手里这玩意什么时候爆炸</p>
+</blockquote>
+<p>最近有很多文件需要从bt下载 奈何硬盘空间 和在家事件的限制无法全部下载上传<br>这时候我就想到了要不然我搭建一台bt离线服务器吧<br>于是搭建计划就风风火火的开始了<br>到这里为止neko都还不知道他要踩多少坑、</p>
+<hr>
+<p>事先说明 这次我会把所有踩坑记录全部贴在对应的安装步骤<br>如果是用我这个教程的 请不要中途换教程 （这是第一个坑）</p>
+<p>1.选择系统 我这边推荐的centos下载连接我就放在这里</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/centos/7.9.2009/isos/x86_64/CentOS-7-x86_64-DVD-2009.iso">链接来着清华镜像站</a></p>
+</blockquote>
+<p>什么？问什么不用Ubuntu？<br>就_*_*是这玩意害得我白白浪费了两天的时间 装个系统装一个下午的还爆各种毛病。。<br>我这辈子不会碰它了<br>起码在服务器上</p>
+<p>2.将镜像拷入u盘<br>百度搜rufus选择第一个 下载 打开 把下好的镜像放进去 选择U盘 开始<br>注意：拷入镜像会导致u盘所有文件丢失请保证好重要文件</p>
+<p>3.安装系统<br>将拷好镜像的u盘插入需要安装的电脑 狂按f12（每种机型不一样）<br>使用u盘启动<br>进入安装界面 在安装界面选择网络 硬盘 安装类型（推荐选择最小系统安装 虽然没有桌面环境 但是纯命令行也是迟早要习惯的）<br>点击安装<br>输入root密码与账户名与密码<br>等待</p>
+<p>4.开启ssh<br>这步不多说了 网上一堆教程 命令行的机器是一定要开ssh<br>不然就一个窗口 难受死你</p>
+<p>5.切换root用户<br>成功进入ssh进入系统第一件事<br>切换root用户<br>切换root用户<br>切换root用户<br>重要的事情说三遍 虽然你创建的用户可能有管理员权限 但是还是建议你切换root用户<br>虽然没有理由<br>但是我感觉有很多问题都是这个引起的（坑）</p>
+<p>6.安装宝塔系统<br>宝塔 对新人非常友好 有了它你甚至可以不用安装最后的文件管理系统<br>（还是建议装）<br>安装命令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#该命令适用于Debian</span><br><span class="line">wget -O install.sh http://download.bt.cn/install/install-ubuntu_6.0.sh &amp;&amp; bash install.sh</span><br></pre></td></tr></table></figure>
+
+<p>复制粘贴<br>如果出现bash: wget: 未找到命令 无法安装的话</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install wget</span><br></pre></td></tr></table></figure>
+
+<p>安装wget下载命令</p>
+<p>7.安装Aria2<br>这是个下载工具<br>我这里用的是使用逗比大佬的脚本安装Aria2</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget -N --no-check-certificate </span><br><span class="line">https://ghproxy.com/https://raw.githubusercontent.com/ToyoDAdoubi/doubi/master/aria2.sh &amp;&amp; chmod +x </span><br><span class="line">aria2.sh &amp;&amp; bash aria2.sh</span><br></pre></td></tr></table></figure>
+
+<p>下载成功后会出现</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">   Aria2 一键安装管理脚本 [v1.1.10]</span><br><span class="line"> -- Toyo  doub.io/shell-jc4 --</span><br><span class="line"> </span><br><span class="line"> 0. 升级脚本</span><br><span class="line"> ————————————</span><br><span class="line"> 1. 安装 Aria2</span><br><span class="line"> 2. 更新 Aria2</span><br><span class="line"> 3. 卸载 Aria2</span><br><span class="line"> ————————————</span><br><span class="line"> 4. 启动 Aria2</span><br><span class="line"> 5. 停止 Aria2</span><br><span class="line"> 6. 重启 Aria2</span><br><span class="line"> ————————————</span><br><span class="line"> 7. 修改 配置文件</span><br><span class="line"> 8. 查看 配置信息</span><br><span class="line"> 9. 查看 日志信息</span><br><span class="line"> 10. 配置 自动更新 BT-Tracker服务器</span><br><span class="line"> ————————————</span><br><span class="line"></span><br><span class="line">当前状态: 未安装</span><br><span class="line"></span><br><span class="line">请输入数字 [0-10]:</span><br></pre></td></tr></table></figure>
+
+<p>输入数字1进行安装<br>（坑 这里如果你用的是国内服务器的话可能遇到没法安装的情况 只需要把dns改为1.0.0.1就行<br>别问 问就是国内网络环境堪忧）<br>然后再宝塔中放行6800端口 这是aria2的默认端口</p>
+<p>8.宝塔创建下载目录<br>打开宝塔的文件选项<br>在根目录新建一个/data/download<br>用于存放bt下载文件</p>
+<p>9.修改配置文件<br>进入/root/.aria2<br>修改conf文件<br>找到# 文件的保存路径(可使用绝对路径或相对路径), 默认: 当前启动位置 下方<br>将原地址改为/data/download<br>重启服务</p>
+<p>10.安装 AriaNg<br>用宝塔来安装 AriaNg，文件菜单进入/www/wwwroot目录，点击远程下载，在URL地址项填入下载地址<a target="_blank" rel="noopener" href="https://github.com/mayswind/AriaNg-DailyBuild/archive/master.zip">https://github.com/mayswind/AriaNg-DailyBuild/archive/master.zip</a> 然后点击确定开始下载。<br>然后解压文件</p>
+<p>11.在网站选项创建网站<br>域名位置输入服务器ip<br>注意将根目录位置换为解压文件位置</p>
+<p>12.配置BT下载<br>访问你的服务器ip 进入AriaNg设置<br>填入前面设立的密码</p>
+<p>13.安装 FileBrowser 文件管理面板<br>回到ssh<br>按照以下顺序</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">//安装官方脚本</span><br><span class="line">wget https://ghproxy.com/https://raw.githubusercontent.com/filebrowser/get/master/get.sh</span><br><span class="line">//创建FileBrowser数据库 -d 后面跟路径</span><br><span class="line">filebrowser -d /2ha/filebrowser.db config init</span><br><span class="line">//监听所有网卡接口</span><br><span class="line">filebrowser -d /2ha/filebrowser.db config set --address 0.0.0.0</span><br><span class="line">//更改监听端口，不改也可以，默认8080，如果想改，比如改成9999就如下面</span><br><span class="line">filebrowser -d /2ha/filebrowser.db config set --port 9999</span><br><span class="line">//启用调试模式-d后面跟你刚刚建立的数据库路径</span><br><span class="line">filebrowser -d /2ha/filebrowser.db</span><br></pre></td></tr></table></figure>
+
+<p>完成上述操作后就可以尝试访问ip加端口<br>如果可以访问就可以进入下一步<br>创建一个service来管理FileBrowser<br>复制粘贴以下内容直接运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">cat &gt; /usr/lib/systemd/system/filebrowser.service &lt;&lt;EOF</span><br><span class="line">[Unit]</span><br><span class="line">Description=File Browser</span><br><span class="line">After=network.target</span><br><span class="line">[Service]</span><br><span class="line">ExecStart=/usr/local/bin/filebrowser -d /2ha/filebrowser.db</span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+
+<p>重载使其生效</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl daemon-reload</span><br></pre></td></tr></table></figure>
+
+<p>这里是基本的管理命令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//创建一个新的管理账号：filebrowser -d /2ha/filebrowser.db users add admin admin --perm.admin</span><br><span class="line">//运行：systemctl start filebrowser.service</span><br><span class="line">//停止运行：systemctl stop filebrowser.service</span><br><span class="line">//开机启动：systemctl enable filebrowser.service</span><br><span class="line">//取消开机启动：systemctl disable filebrowser.service</span><br><span class="line">//查看运行状态：systemctl status filebrowser.service</span><br></pre></td></tr></table></figure>
+
+<p>我们可以使用新建管理账号命令创建一个账号<br>建议不要用admin 自己搞一个</p>
+<p>14.收尾<br>到这里基本所有功能都能用 但是我们还是要完善以下体验<br>FileBrowser可以调整中文在设置中<br>个人建议创建两个账号一个入场访问下载文件夹另一个可以对根目录进行操作</p>
+<p>截止到我写完的时间是1：18分。。。<br>终于<br>这套系统<br>终于开始正常工作了<br>最后提一嘴<br>最后的安装 FileBrowser 文件管理面板是最麻烦的 倒不是步骤<br>就是这东西可能回出现很多神奇的问题 而最可怕的这东西是一点不能错的 我起码在这上面栽倒了三次。。。。。</p>
+<p>好了就说那么多了 睡觉</p>
+
+    </div>
+    </article>
+</div>
+
+    <div class="_toc">
+        <strong class="toc-title">
+        Contents
+        </strong>
+        <div class="toc-content">
+            
+        </div>
+    </div>
+
+</section>
+
+
+    <nav class="post-nav">
+        
+            <div class="page-tags">
+                
+            </div>
+        
+    </nav>
+
+
+
+    <nav class="paginator clearfix">
+        
+            <a class="prev" href="/2021/02/04/%E9%9A%8F%E7%AC%94-%E4%B8%80-%E3%80%8A%E6%97%A0%E9%A2%98%E3%80%8B/">
+                <i class="iconfont icon-left"></i>
+                <span class="prev-text">随笔 一 《无题》</span>
+            </a>
+        
+        
+            <a class="next" href="/2021/01/23/mt1/">
+                
+                <span class="prev-text">漫谈 其一 《喜剧与悲剧》</span>
+                <i class="iconfont icon-right"></i>
+            </a>
+        
+    </nav>
+
+
+            </main>
+            <div class="copyright">
+  <div class="text">Powered By
+    <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/zjx137/hexo-theme-Tsu">Tsu</a> &copy 2019
+  </div>
+</div>
+
+        </div>
+    <div class="back-to-top" id="back-to-top">
+            <i class="iconfont icon-up"></i>
+    </div>
+        
+    </body>
+    
+<script src="/js/jquery-3.3.1.min.js"></script>
+
+    
+<script src="/js/back-to-top.js"></script>
+
+    
+<script src="/js/scroll.js"></script>
+
+    <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": { 
+        preferredFont: "TeX", 
+        availableFonts: ["STIX","TeX"], 
+        linebreaks: { automatic:true }, 
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) 
+    },
+    tex2jax: { 
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ], 
+        processEscapes: true, 
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {  
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, 
+        Macros: { href: "{}" } 
+    },
+    messageStyle: "none"
+    }); 
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+</html>

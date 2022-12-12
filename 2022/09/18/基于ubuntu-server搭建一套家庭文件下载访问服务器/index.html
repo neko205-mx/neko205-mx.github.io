@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<title>基于ubuntu server搭建一套家庭文件下载访问服务器 | Neko Alternate Blog</title>
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+    <meta name="generator" content="Hexo 5.4.2"></head>
+    <body>
+        <div class="container">
+            <header>
+<div class="main">
+<div class="title">
+    <a href="#" class="logo">Neko Alternate Blog</a>
+</div>
+<div class="site-nav">
+    <ul id="menu" class="menu">
+    
+        <li class="menu-item text-underline">
+            <a href="/">Home</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/archives">Archives</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/about/">About</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/link/">Menu.Link</a>
+        </li>
+            
+    </ul>
+</div>
+</div>
+</header>
+            <main class="main">
+                <section class="posts clearfix">
+<div class="post-wrapper">
+    <article class="post article-entry">
+    <div class="post-title">
+        基于ubuntu server搭建一套家庭文件下载访问服务器
+    </div>
+    <p class="sub">9月 18 2022</p>
+    <div class="post-content">
+        <h1 id="基于ubuntu-server搭建一套家庭文件下载访问服务器"><a href="#基于ubuntu-server搭建一套家庭文件下载访问服务器" class="headerlink" title="基于ubuntu server搭建一套家庭文件下载访问服务器"></a>基于ubuntu server搭建一套家庭文件下载访问服务器</h1><p>做这一套东西其实并非一时兴起，算的是早有预谋罢之前就尝试利用香橙派zero，来搭建个简单的网盘，当时部署了一个samba和qb前者利用smb连接我的电脑和home server，qb则作为bt下载来离线一些动画与资源，当时的这套东西并未做外网访问的设置 仅仅是在家里的内网运行了一段时间，后来发现稳定性不行就让他停了，让一个派带着2.5寸机械硬盘跑还是太难为他了，平均半天掉一次盘我也很怕硬盘gg，所以之后我也是拔掉硬盘用frp作为一个小型下bt离线器开始工作，直到这次我收到了一台朋友送的软路由。。。</p>
+<p>配置如下</p>
+<ul>
+<li>i5-2537m  Q1’11的产品 大致时间是2010罢  基准频率1.4Ghz 最大睿频2.3Ghz  32nm  TDP只有17w 可以说很省电了</li>
+<li>8g笔记本内存 没看牌子</li>
+<li>32G msata 32G sata  前者被我当作系统盘来用了 后者拆下来换成了我的1t的2.5寸机械盘</li>
+</ul>
+<p><img src="https://s1.ax1x.com/2022/12/12/z4QVcd.png"></p>
+<p>简单跑了个娱乐大师 合理</p>
+<p><img src="https://s1.ax1x.com/2022/12/12/z4QZjA.jpg"></p>
+<p>我的硬盘 <img src="https://s1.ax1x.com/2022/12/12/z4QmnI.png"></p>
+<p>设备</p>
+<p>好了 现在来明确下需求</p>
+<ol>
+<li> 高自定义</li>
+<li> 简单的文件访问 需要做到外网访问</li>
+<li> 简单的文件离线工作 不止bt</li>
+<li> 需要个好用简单的服务器管理软件 免得寄</li>
+</ol>
+<p>其实当时道这里我已经明白了自己的需求 甚至具体到软件</p>
+<p>解决方案：内网穿透+vpn 文件访问可以使用samba 利用vpn连接 也可以实现外网访问 害安全 bt下载 qBitTorrent网页模式 利用frp 或者vpn 云服务器互动资源 smb服务</p>
+<p>然后是系统的选择</p>
+<p>当时在我面前的选择是 debian ubuntu arch centos等等当然还有windows server</p>
+<p>首先排除的肯定是windiows server 不做解释</p>
+<p>引用一个知乎网友说的话</p>
+<blockquote>
+<p>linux 系统没有好坏 重要的适合自己 不然为什么有那么多发行版</p>
+</blockquote>
+<p>权衡利弊后我还是选择了我个人比较熟悉的 ubuntu server的发行版 各种问题的解决方案都好找 要说互联网上最好找到问题解决方案的linux 大概就是ubuntu了罢</p>
+<p>》》》》》快进到系统安装完毕</p>
+<p>第一步 部署samba</p>
+<p>首先肯定是安装</p>
+<p><code>apt-get install samba</code></p>
+<p>一般情况下samba的配置文件会放在/etc/samba/下 那么肯定是备份一份conf</p>
+<p><code>mv smb.conf smb.conf.bak</code></p>
+<p>让后新建个空白的conf配置文件</p>
+<p><code>nano smb.conf</code></p>
+<p>先保存 推出 新建，或者基于你希望的用户加道用户组</p>
+<p><code>smbpasswd -a root</code></p>
+<p>之后 重新配置conf文件</p>
+<blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[samba]</span><br><span class="line">    path = /home/114514/samba</span><br><span class="line">    browseable = yes</span><br><span class="line">    read only = no</span><br><span class="line">#    force create mode = 0660</span><br><span class="line">#    force directory mode = 2770</span><br><span class="line">    valid users = root</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>配置</p>
+<p>作用</p>
+<p>samba</p>
+<p>登入时共享的名称</p>
+<p>path</p>
+<p>分享的路径</p>
+<p>browseable</p>
+<p>是否在共享列表列出该共享</p>
+<p>valid users</p>
+<p>允许访问的用户和组</p>
+<p>完成之后 用</p>
+<p><code>sudo systemctl restart nmbd.service</code></p>
+<p>重启samba服务</p>
+<p>现在可以在你的windows电脑上利用</p>
+<p><code>\\ip\文件夹</code></p>
+<p>尝试进行连接</p>
+<p>第二步 安装aria2</p>
+<p>这个就比samba更简单了。。。它有脚本</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/P3TERX/aria2.sh">GitHub - P3TERX/aria2.sh: Aria2 一键安装管理脚本 增强版</a>、</p>
+<p><a target="_blank" rel="noopener" href="https://p3terx.com/archives/aria2-oneclick-installation-management-script.html">脚本作者blog</a></p>
+<p>当然如果你不喜欢脚本也可以使用docker来进行安装</p>
+<p><a target="_blank" rel="noopener" href="https://sliu.vip/linux/docker-aria2/">基于docker的aria2安装</a></p>
+<blockquote>
+<p>docker像什么 docker像个厕所，每一次我在家里（linux）上完厕所（删除软件）要冲洗（关闭各种服务删除各种配置）的时候都会无比痛苦，而用了docker我就可以做到上完洗手间连着洗手间一起扔了，无比方便————佚名</p>
+</blockquote>
+<p>第三步</p>
+<p>qb安装</p>
+<p>这个简单</p>
+<p><code>apt install -y qbittorrent-nox</code></p>
+<p>启动</p>
+<p><code>qbittorrent-nox</code></p>
+<blockquote>
+<p><strong>****</strong> 信息 <strong>****</strong> 欲通过网页端控制 qBittorrent，你需要访问 <a target="_blank" rel="noopener" href="http://localhost:8080/">http://localhost:8080</a> 网页端管理员的用户名是：admin 网络端管理员密码设置为默认密码：adminadmin 存在安全风险！请考虑在设置更改密码！</p>
+</blockquote>
+<p>第一次启动的信息 这时候可以到 web页面重新设置密码和安全措施</p>
+<p>ps：如果要使用frp实现外网访问qb webui 需要关闭host header属性验证</p>
+<p>第四步 网页控制</p>
+<p>应为考虑到长期不在家 所以我选择了宝塔作为网页管理面板 虽然他曾经收集用户信息 虽然他曾经漏洞百出 虽然他。。。</p>
+<p>但是还是给他一次机会。。。</p>
+<p>当然要不是mdserver-web没有做到完善 我也不会选择bt（</p>
+<p>安装命令</p>
+<blockquote>
+<p>if [ -f /usr/bin/curl ];then curl -sSO <a target="_blank" rel="noopener" href="https://download.bt.cn/install/install_panel.sh;else">https://download.bt.cn/install/install_panel.sh;else</a> wget -O install_panel.sh <a target="_blank" rel="noopener" href="https://download.bt.cn/install/install_panel.sh;fi;bash">https://download.bt.cn/install/install_panel.sh;fi;bash</a> install_panel.sh ed8484bec</p>
+</blockquote>
+<p>ps： 如果出现前面配置的服务无法使用的情况 请考虑是否是面板在配置的时候修改了防火墙的配置 重置下</p>
+<p>第五 部署AriaNg</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/mayswind/AriaNg/releases">https://github.com/mayswind/AriaNg/releases</a></p>
+<p>宝塔都装了 丢进去就好</p>
+<p>第六 部署frp</p>
+<p>如果没有自己的云服务器 也可以考虑用网络上公开的内网穿透服务 当然安全性不做保证</p>
+<p>当然 我才用的还是docker 没办法 这玩意太方便了</p>
+<p>首先我们安装服务端frps</p>
+<p><code>mkdir /etc/frp</code></p>
+<p><code>touch /etc/frp/frps.ini</code></p>
+<p><code>nano /etc/frp/frps.ini</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[common]</span><br><span class="line"></span><br><span class="line">bind_port = 7000 绑定端口</span><br><span class="line">bind_addr = 0.0.0.0 绑定ip</span><br><span class="line">token=123456 认证密码</span><br><span class="line"></span><br><span class="line">dashboard_port = 7001 面板</span><br><span class="line">dashboard_user = admin </span><br><span class="line">dashboard_pwd = admin</span><br></pre></td></tr></table></figure>
+
+<p>拉取镜像</p>
+<p><code>docker pull snowdreamtech/frps</code></p>
+<p>运行容器</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="keyword">run</span><span class="language-bash"> -d \</span></span><br><span class="line"><span class="language-bash">-v /root/docker/frp/frps.ini:/etc/frp/frps.ini \</span></span><br><span class="line"><span class="language-bash">-p 17000-17010:7000-7010 \</span></span><br><span class="line"><span class="language-bash">--name frp-server \</span></span><br><span class="line"><span class="language-bash">--restart=always --privileged=<span class="literal">true</span> \</span></span><br><span class="line"><span class="language-bash">snowdreamtech/frps</span></span><br></pre></td></tr></table></figure>
+
+<p>到这里 服务器端的配置已经完成</p>
+<p>现在是 客户端配置</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo mkdir /etc/frp</span><br><span class="line">nano /etc/frp/frps.ini</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[ssh]</span><br><span class="line">type = tcp</span><br><span class="line">local_ip = 127.0.0.1</span><br><span class="line">local_port = 22</span><br><span class="line">remote_port = 2288</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker run --restart=always --network host -d -v /opt/docker/frpc/frpc.ini:/etc/frp/frpc.ini --name frpc </span><br><span class="line">snowdreamtech/frpc</span><br></pre></td></tr></table></figure>
+
+<p>ok 配置完成</p>
+<p>这时候应该就可以在服务器的frpweb面板看到了 访问相应端口就好</p>
+<p>END</p>
+
+    </div>
+    </article>
+</div>
+
+    <div class="_toc">
+        <strong class="toc-title">
+        Contents
+        </strong>
+        <div class="toc-content">
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8Eubuntu-server%E6%90%AD%E5%BB%BA%E4%B8%80%E5%A5%97%E5%AE%B6%E5%BA%AD%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD%E8%AE%BF%E9%97%AE%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-text">基于ubuntu server搭建一套家庭文件下载访问服务器</span></a></li></ol>
+        </div>
+    </div>
+
+</section>
+
+
+    <nav class="post-nav">
+        
+            <div class="page-tags">
+                
+            </div>
+        
+    </nav>
+
+
+
+    <nav class="paginator clearfix">
+        
+            <a class="prev" href="/2022/10/19/wp-global-styles-mdx/">
+                <i class="iconfont icon-left"></i>
+                <span class="prev-text">Custom Styles</span>
+            </a>
+        
+        
+            <a class="next" href="/2022/09/11/238/">
+                
+                <span class="prev-text">Untitled Post - 3</span>
+                <i class="iconfont icon-right"></i>
+            </a>
+        
+    </nav>
+
+
+            </main>
+            <div class="copyright">
+  <div class="text">Powered By
+    <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/zjx137/hexo-theme-Tsu">Tsu</a> &copy 2019
+  </div>
+</div>
+
+        </div>
+    <div class="back-to-top" id="back-to-top">
+            <i class="iconfont icon-up"></i>
+    </div>
+        
+    </body>
+    
+<script src="/js/jquery-3.3.1.min.js"></script>
+
+    
+<script src="/js/back-to-top.js"></script>
+
+    
+<script src="/js/scroll.js"></script>
+
+    <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": { 
+        preferredFont: "TeX", 
+        availableFonts: ["STIX","TeX"], 
+        linebreaks: { automatic:true }, 
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) 
+    },
+    tex2jax: { 
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ], 
+        processEscapes: true, 
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {  
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, 
+        Macros: { href: "{}" } 
+    },
+    messageStyle: "none"
+    }); 
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+</html>

@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<title>Neko Alternate Blog</title>
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+    <meta name="generator" content="Hexo 5.4.2"></head>
+    <body>
+        <div class="container">
+            <header>
+<div class="main">
+<div class="title">
+    <a href="#" class="logo">Neko Alternate Blog</a>
+</div>
+<div class="site-nav">
+    <ul id="menu" class="menu">
+    
+        <li class="menu-item text-underline">
+            <a href="/">Home</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/archives">Archives</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/about/">About</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/link/">Menu.Link</a>
+        </li>
+            
+    </ul>
+</div>
+</div>
+</header>
+            <main class="main">
+                <section class="posts clearfix">
+    <div class="posts-wrapper">
+    
+        <article class="post article-entry">
+            <div class="post-title">
+                <a class="post-title-link text-underline" href="/2020/07/25/2020-7-24/">单硬盘+uefi linux win双系统安装教程</a>
+            </div>
+            <p class="sub">7月 25 2020</p>
+            <div class="post-content">
+                
+                    <p>说实话，uefi的系统是真的难装-w-<br>我用来操作的系统是mint linux 操作过程使用与所有（大概）有自主选择分区的linux系统</p>
+<h2 id="事前准备"><a href="#事前准备" class="headerlink" title="事前准备"></a>事前准备</h2><p>装linux的笔记本一台<br>u盘（起码到8g）<br>会一点点（装win系统）的电脑之时 避免搞崩了还要找人修</p>
+<h2 id="第一步-下载mint-linux"><a href="#第一步-下载mint-linux" class="headerlink" title="第一步 下载mint linux"></a>第一步 下载mint linux</h2><p><img src="https://files.catbox.moe/ro2zwy.png" alt="官网" title="官网"><br><a target="_blank" rel="noopener" href="https://www.linuxmint.com/download.php">下载地址</a><br>建议到官网下载<br>当然也可以用我的网盘<br><a target="_blank" rel="noopener" href="https://wp.neko25.xyz/%E9%95%9C%E5%83%8F%E5%BA%93/linuxmint-20-cinnamon-64bit.iso">网盘</a></p>
+<h2 id="第二步-设置分区"><a href="#第二步-设置分区" class="headerlink" title="第二步 设置分区"></a>第二步 设置分区</h2><p>这部就很简单了 到你管理里面压缩一个空白空间出来<br>不要分区 只要压缩<br>什么你不会？。。。你还是先去学习一下计算机基础把</p>
+<h2 id="第三步-写u盘"><a href="#第三步-写u盘" class="headerlink" title="第三步 写u盘"></a>第三步 写u盘</h2><p>下载u盘写入工具<br><a target="_blank" rel="noopener" href="https://rufus.ie/zh_CN.html">Rufus</a><br>当然你用别的也行<br>只要能把iso镜像写到u盘<br>不过我还是力推这个 真的好用<br>接入u盘和导入镜像后选择GPT分区类型<br>剩下的默认就好</p>
+<h2 id="第四步-选择"><a href="#第四步-选择" class="headerlink" title="第四步 选择"></a>第四步 选择</h2><p>这一步我被坑了很多次<br>就是<br>一定要进系统装系统<br>可能听这有一点懵逼<br>放图<br><img src="https://files.catbox.moe/cintyu.png" alt="选择" title="选择"><br>选择第一个 进入u盘的系统<br>进去以后就会看到个光盘<br><img src="https://files.catbox.moe/zez4cs.png" alt="系统" title="系统"><br>选择这个光盘 进入安装界面<br>旁边的语言框往下拉可以看到简体中文<br>下一步<br>键盘选择<br>如果你的键盘不是什么奇奇怪怪的键盘就直接<br>下一步<br>选择“安装多媒体编码译码器”<br>如果要输入密码不要管他<br>下一步<br>选着“其他选项”<br>双系统还会有一个“mint linux和**os共存”<br>的选项 建议手动 第一个虽然有人成功过 但是以我的经验可能不太稳定<br><img src="https://files.catbox.moe/enatee.png" alt="选择" title="选择"></p>
+<h2 id="第五步-安装类型与分区"><a href="#第五步-安装类型与分区" class="headerlink" title="第五步 安装类型与分区"></a>第五步 安装类型与分区</h2><p>到这里 你会看到两个盘（如果你分区多的话也可能是一堆）<br>找到你分出来的空白分区<br>什么？看不出来？你分区的大小总记得把 找大小<br><img src="https://files.catbox.moe/3sc1i5.png" alt="分区" title="分区"><br>因为这是虚拟机所以是空白的<br>不过都一样<br>第一步先分200mb给efi分区 很重要 一定要分<br>第二步分大概20g的分区挂载到/（如果你空间不够的话可以酌情减少）<br>第三步分你的内存的两倍给交换空间（这个大概就是用来给你电脑内存不足的情况下调用这片区域来运行程序）<br>第四步步吧剩下的空间全部分区挂载到/home（这个是你的个人空间）<br>说明一下<br>efi分区。。。 你可以不分试试<br>/分区 这个相等于系统的c盘<br>交换空间分区 大概 可能 或许 也许 可以不用分<br>/home分区 这个相当于系统的d盘</p>
+<h2 id="第六步-选择“安装启动引导器的设备”"><a href="#第六步-选择“安装启动引导器的设备”" class="headerlink" title="第六步 选择“安装启动引导器的设备”"></a>第六步 选择“安装启动引导器的设备”</h2><p>这步非常重要<br>所以单独拿出来<br>我们刚刚不是创建了200mb的efi分区吗<br>找到这个分区 看清楚设备栏的编号（注意不要和win的efi搞混了win的是500mb）<br><img src="https://files.catbox.moe/jxm4m4.png" alt="不 要 搞 混 了" title="不 要 搞 混 了"><br>看清楚以后 到下面的“安装启动引导器的设备”栏<br>选着相同的编号<br>注意了 一定要看清楚 不要眼瞎<br>选择完成以后 下一步</p>
+<h2 id="第六步-安装过程"><a href="#第六步-安装过程" class="headerlink" title="第六步 安装过程"></a>第六步 安装过程</h2><p>点击下一步<br>等待ing<br>因为需要分区加格式换所以需要点时间<br>耐心~<br>选择地区直接默认<br>下一步<br>输入密码账号<br>下一步<br>等待ing</p>
+<h2 id="第七步"><a href="#第七步" class="headerlink" title="第七步"></a>第七步</h2><p>当这些全部完成之后 会提醒你重启，把U盘拔了 点重启<br>如果卡死就强制关机重启就好</p>
+<h2 id="结尾"><a href="#结尾" class="headerlink" title="结尾"></a>结尾</h2><p>来首歌吧-v-<br>[Meting]<br>[Music server=”netease” id=”553362483” type=”song”/]<br>[/Meting]</p>
+
+                
+            </div>
+        </article>
+    
+        <article class="post article-entry">
+            <div class="post-title">
+                <a class="post-title-link text-underline" href="/2020/07/19/2020-7-18/">2020-7-18</a>
+            </div>
+            <p class="sub">7月 19 2020</p>
+            <div class="post-content">
+                
+                    <p>今天<br>中考<br>没参加 也不用参加<br>说实话这段时间以来有很多人问我<br>“初中三年不参加中考不记得遗憾吗”<br>“…..”<br>沉默</p>
+<h2 id="关于最近"><a href="#关于最近" class="headerlink" title="关于最近"></a>关于最近</h2><p>最近的状态很差劲。。真的很差劲<br>不知道什么原因<br>。。<br>废话我要是知道我还会用很差劲形容吗<br>干什么事情都提不起兴趣<br>每一次想感谢什么 都会一而再再而三的问自己<br>“你现在做这个有什么意义吗？”<br>每一件事情都是。。</p>
+<p>不知道要怎么办</p>
+<h2 id="有关爷爷"><a href="#有关爷爷" class="headerlink" title="有关爷爷"></a>有关爷爷</h2><p>八十多岁高龄。。<br>住院几天以后 看着好像也快不行了<br>之前还能睁眼 现在整个人就是一个昏迷的状态。。<br>不知道还能撑几天</p>
+<p>奶奶为了照顾他也在生病的边缘徘徊<br>就这样下去 估计也成不了多久<br>明明有六七个子女。。真是讽刺</p>
+<h2 id="关于作品"><a href="#关于作品" class="headerlink" title="关于作品"></a>关于作品</h2><p>新的皮肤卡住了<br>粉色头发 衣服不知道可以用些什么<br>组上的朋友们推荐的是看看《辉夜》里的书记<br>粉头配黑色校衣（JK）<br>。。<br>找个时间试试吧<br>如果效果好 就用这样</p>
+<hr>
+<p>[Meting]<br>[Music server=”netease” id=”293436” type=”song”/]<br>[/Meting]<br>生生生生暗生始，死死死死冥死终<br>——————东方永夜抄</p>
+
+                
+            </div>
+        </article>
+    
+        <article class="post article-entry">
+            <div class="post-title">
+                <a class="post-title-link text-underline" href="/2020/07/13/2020-7-12/">2020-7-12</a>
+            </div>
+            <p class="sub">7月 13 2020</p>
+            <div class="post-content">
+                
+                    <p>滚回来写日摘啦</p>
+<p>说实话最近也没多少大事<br>倒是小事不断</p>
+<h2 id="关于网站"><a href="#关于网站" class="headerlink" title="关于网站"></a>关于网站</h2><p>网站嘛 在昨天换了个主题<br>说实话这个主题确实不错<br>自定义的幅度在我的见识里最高的<br>当初本来还想搞大白墙的<br>然后又感觉大白墙实在是太单调了一点<br>于是乎就换成了这个主题<br>甚至于它连后台。。。都改了<br><img src="https://files.catbox.moe/oqp8xs.PNG" alt="后台" title="后台"><br>nb<br>属实nb</p>
+<h2 id="有关于毕业用-视频相册"><a href="#有关于毕业用-视频相册" class="headerlink" title="有关于毕业用 视频相册"></a>有关于毕业用 视频相册</h2><p>说实话<br>这东西做的我有点想吐血<br>先后做了三版老师那里都没有通过<br>今天刚完成第四版<br>用爱剪辑的剪的。。。<br>啊<br>说到爱剪辑<br>我想说一句<br>爱剪辑nmal！！！！！！！！！！！！！<br>我玩电脑这么多年 就没见过这么骚的操作<br>官网上写的是免费软件<br>用下来也是免费<br>到最后视频到出。。。。<br>就需要我“捐赠”9.9元<br>我不捐把。。。<br>它还就真不让你导出了<br>。。<br>哈<br>你管这叫捐赠？</p>
+<h2 id="有关于Java的学习"><a href="#有关于Java的学习" class="headerlink" title="有关于Java的学习"></a>有关于Java的学习</h2><p>现在看看老师那边能不能过把，，，，<br>如果能过<br>很快就可以开始步入正轨的学习（大概）<br>如果视频还要再版<br>。。。。。<br>哈哈</p>
+<hr>
+<p>那么 就这样把</p>
+<hr>
+<p>莫笑贱贫夸富贵，共成枯骨两何如？<br>—————— 放言五首·其四<br>[Meting]<br>[Music server=”netease” id=”423058298” type=”song”/]<br>[/Meting]</p>
+
+                
+            </div>
+        </article>
+    
+        <article class="post article-entry">
+            <div class="post-title">
+                <a class="post-title-link text-underline" href="/2020/07/10/12-2/">小新air14开箱</a>
+            </div>
+            <p class="sub">7月 10 2020</p>
+            <div class="post-content">
+                
+                    <p>在这里先感谢母亲大人给我买这台笔记本</p>
+<hr>
+<p>这台是联想小新系列的air14（锐龙版）不带独显<br>其实我感觉amd的核显也差不到那去<br>具体配置是</p>
+<p>cpu：AMD Ryzen5 4600<br>gpu：核显<br>内存：三星 8g 双通道16g</p>
+<p>啊对了<br>估计是为了做薄所以他没有王先生接口的<br>所以<br>没法用网线 这个问题倒不大 现在无线基本能满足要求了</p>
+<hr>
+<p>差不多了<br>上图！<br><img src="https://img.vim-cn.com/2d/59a71ae411a8219d0b3d5f1bbaf19a71f5298d.jpg" alt="箱子" title="箱子"><br>不要在意拍摄环境<br>两侧接口<br><img src="https://img.vim-cn.com/8a/0f048c620be395ebd5fdc27e0aeb496deadd72.jpg" alt="右侧" title="右侧"><br><img src="https://img.vim-cn.com/7a/b40e42cd1dfdd22657ef1f1c751bd8dc9749ab.jpg" alt="左侧" title="左侧"><br>感觉是接口有点少 但是日常应该够用<br>实在不行还要买个转接口XD<br>type-c也只有一个 还是和充电共享的<br>俩usb<br>还行~~</p>
+<hr>
+
+                
+            </div>
+        </article>
+    
+        <article class="post article-entry">
+            <div class="post-title">
+                <a class="post-title-link text-underline" href="/2020/07/04/2020-07-03/">Fri Jul 03 2020 08:00:00 GMT+0800 (中国标准时间)</a>
+            </div>
+            <p class="sub">7月 04 2020</p>
+            <div class="post-content">
+                
+                    <h2 id="关于考试"><a href="#关于考试" class="headerlink" title="关于考试"></a>关于考试</h2><p>7月3了。。<br>时间真的是跟做火箭一样<br>后天要到对方学校去报道，缴费 拿录取通知书<br>刚刚同学还在问我要不要一起走 想了想还是拒绝了<br>这种情况一起反而可能出麻烦</p>
+<h2 id="关于睡眠"><a href="#关于睡眠" class="headerlink" title="关于睡眠"></a>关于睡眠</h2><p>说实话，真的不知道什么时候出现的这样的想法<br>白天困死 晚上不舍得睡觉<br>。。。<br>怎么说呢<br>就是感觉睡觉浪费时间（宁这想法还真是有够离谱的啊）<br>于是乎就会起床 干一些不明所以的事情<br>包括但不限于<br>打开电脑发呆<br>玩手机<br>自言自语</p>
+<p>不过现在到还好 能够克制一点<br>这鬼东西大概就和小时候一个人在床上自说自话演独角戏一样吧</p>
+<h2 id="关于游戏"><a href="#关于游戏" class="headerlink" title="关于游戏"></a>关于游戏</h2><p>最近和我妈谈到游戏<br>她的观点是“游戏害人不浅”<br>所有游戏必须封禁 不然中国的小孩就完了<br>说实话我想反驳 但是又不知道从何反起<br>游戏没有危害？<br>就当下而言 对于没有自控能力的未成年人<br>有 而且很大<br>那游戏可以封禁？<br>不能 没有原因</p>
+<p>其实我和我妈谈到这个话题的原因是我看到有一些家长要求<br>“每次进游戏必须进行人脸识别验证身份”<br>当时就感觉特别离谱<br>于是就和我妈说了这个事情<br>结果他的观点和那些家长不谋而合<br>。。。<br>没有反驳<br>没必要反驳<br>因为站在家长的角度你就是那个“犯罪”的人<br>你说的一切无非就是给你的罪行开脱</p>
+<h2 id="关于网站"><a href="#关于网站" class="headerlink" title="关于网站"></a>关于网站</h2><p>打算给网站换一个主题 干净一点的大白墙？<br>有这个打算</p>
+<hr>
+<p>句子 句子</p>
+<p>和人论辩当然不是坏事，然而任何一方带着情绪就有可能令其完全沦为无意义的吵架<br>————————<a target="_blank" rel="noopener" href="https://phenol-phthalein.info/2020/05/24/1415/">白洛嘉</a></p>
+<p>[Meting]<br>[Music server=”netease” id=”528404572” type=”song”/]<br>[/Meting]</p>
+
+                
+            </div>
+        </article>
+    
+        <article class="post article-entry">
+            <div class="post-title">
+                <a class="post-title-link text-underline" href="/2020/06/30/2020-06-30/">Tue Jun 30 2020 08:00:00 GMT+0800 (中国标准时间)</a>
+            </div>
+            <p class="sub">6月 30 2020</p>
+            <div class="post-content">
+                
+                    <p>今天是6月的最后一天<br>一大早辗转与派出所和学校（办理身份证）<br>现在 终于是闲下来了<br>有一说一 这真的是比上课还累</p>
+<hr>
+<p>今天下午还要在区一趟学校 好像是要开什么会？<br>不知道反正去就是了<br>现在的心情可以用诡异来形容了<br>快乐 不舍 烦恼 杂乱<br>啧<br>真是奇妙的化学反应啊</p>
+<hr>
+<p>距离我创建blog也有六个月吧<br>虽说日常的换服务器 崩溃 数据丢失<br>但是还是吧网站开下来了<br>可喜可贺可喜可贺</p>
+<p>要不再去试试十年之约？</p>
+<hr>
+<p>[Meting]<br>[Music server=”netease” id=”538154718” type=”song”/]<br>[/Meting]<br>赫然回首 才发现原来我的人生也如轻小说般烂俗<br>————neko</p>
+
+                
+            </div>
+        </article>
+    
+        <article class="post article-entry">
+            <div class="post-title">
+                <a class="post-title-link text-underline" href="/2020/06/27/2020-06-26/">Fri Jun 26 2020 08:00:00 GMT+0800 (中国标准时间)</a>
+            </div>
+            <p class="sub">6月 27 2020</p>
+            <div class="post-content">
+                
+                    <blockquote>
+<p>如果更好的欣赏一首歌？找一首喜欢的歌，一次性听个够，然后放着吃灰，过个一年半载在来听就会有很不一样的体验</p>
+</blockquote>
+<p>哈。。<br>时间过得真tm’的快啊。。。<br>明天就要面试了，虽说是准备的差不多了<br>但是那突然的换专业，还是让人猝不及防<br>从计算机换到美术，导致很多东西都要紧急变更<br>（捂脸）（难受）<br>自我介绍什么的真的很烦啊啊啊啊啊</p>
+<hr>
+<p>家里热水器坏了，以至于过节还要洗冷水澡<br>本来收今天来修，结果没想到被维修工给咕了。。<br>他现在是说明天来<br>=_= 但愿不要又咕咕了</p>
+<p>话说回来。。。<br>为什么有人喜欢洗冷水澡啊。。<br>（不解）<br>即使是在夏天我也不感觉冷水淋在身上有什么舒服的<br>反而觉得很难受</p>
+<hr>
+<p>对了，面试回来以后把友链修一下吧</p>
+<hr>
+<p>“生命本来就是悲伤而严肃的。我们来到这个美好的世界里，彼此相逢，彼此问候，并结伴同游一段短暂的时间。然后我们就失去了对方，并且莫名其妙就消失了，就像我们突然莫名其妙地来到世上一般。”<br>———————— 《苏菲的世界》<br>[Meting]<br>[Music server=”netease” id=”538154718” type=”song”/]<br>[/Meting]</p>
+
+                
+            </div>
+        </article>
+    
+        <article class="post article-entry">
+            <div class="post-title">
+                <a class="post-title-link text-underline" href="/2020/06/25/2020-6-25/">2020-6-25</a>
+            </div>
+            <p class="sub">6月 25 2020</p>
+            <div class="post-content">
+                
+                    <p>今天。。。<br>依旧炎热，在学校起码还有空调<br>在家连空调都不让开的<br>(躺)</p>
+<hr>
+<p>今天把手机升级到了ios14的测试版，体验不错 特别是磁贴<br>用起来有一种换上了新衣的感觉<br>让人眼前一亮，14还可以隐藏桌面 他会自动把所用应用自动整理到“应用图书馆”里<br>总体来说<br>非常不错<br>啊啊 至于这次开发者大会上的别的功能什么的。。。<br>没设备 体验不了</p>
+<hr>
+<p>过两天就要面试了。。。<br>虽说是有做一点准备。但是奈何还是紧张啊。。<br>看看吧。。<br>能过就过，不能过就中考吧</p>
+<hr>
+<p>“即使我们从未见过白色的乌鸦 我们也不能放弃去寻找它”<br>——————《苏菲的世界》</p>
+
+                
+            </div>
+        </article>
+    
+        <article class="post article-entry">
+            <div class="post-title">
+                <a class="post-title-link text-underline" href="/2020/06/22/cjcs/">插件测试专用界面</a>
+            </div>
+            <p class="sub">6月 22 2020</p>
+            <div class="post-content">
+                
+                    <p>[Meting]<br>[Music server=”netease” id=”1444493657” type=”song”/]<br>[/Meting]</p>
+<p>[dplayer url=”<a target="_blank" rel="noopener" href="https://wp.neko25.xyz/%E7%94%B5%E5%BD%B1/%E5%94%90%E4%BA%BA%E8%A1%97%E6%8E%A2%E6%A1%882.mp4&quot;">https://wp.neko25.xyz/电影/唐人街探案2.mp4&quot;</a> pic=”” /]</p>
+
+                
+            </div>
+        </article>
+    
+        <article class="post article-entry">
+            <div class="post-title">
+                <a class="post-title-link text-underline" href="/2020/06/22/wx/">网站维修报告专用界面</a>
+            </div>
+            <p class="sub">6月 22 2020</p>
+            <div class="post-content">
+                
+                    <p>目前已完成</p>
+<ul>
+<li>  主页设置与联动</li>
+<li>网站基础设置<br>  正在维修</li>
+<li>  邮件发送系统</li>
+<li>  全局https</li>
+<li>  视频插件</li>
+<li>  音频插件</li>
+</ul>
+
+                
+            </div>
+        </article>
+    
+</div>
+<div class="side-bar">
+
+
+    <div class="avator" id="avator">
+    <div class="title">
+        <a href="#" class="text-underline">About Me</a>
+    </div>
+        <img src="avator.jpg" class="ava-img">
+        <h3 class="author">莫问属地，左右不分</h3>
+        <div class="icon-list">
+        <a href=""><i class="iconfont icon-weibo icon-item"></i></a>
+        <a href="mailto:neko@neko25.top"><i class="iconfont icon-email icon-item"></i></a>
+        <a href="neko205-mx"><i class="iconfont icon-github icon-item"></i></a>
+        <a href=""><i class="iconfont icon-linkedin icon-item"></i></a>
+        </div>
+    <div class="tags">
+    <h3 class="tags-title">Tags</h3>
+    <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%97%A5%E6%91%98/" rel="tag">日摘</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9A%8F%E7%AC%94/" rel="tag">随笔</a><span class="tag-list-count">1</span></li></ul>
+</div>
+    </div>
+</div>
+
+</section>
+
+    <nav class="page-nav">
+    
+        <a class="prev" href="/page/5/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text">Prev</span>
+        </a>
+    
+    
+        <a class="next" href="/page/7/">
+            <span class="next-text">Next</span>
+            <i class="iconfont icon-right"></i>
+        </a>
+    
+    </nav>
+
+
+
+            </main>
+            <div class="copyright">
+  <div class="text">Powered By
+    <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/zjx137/hexo-theme-Tsu">Tsu</a> &copy 2019
+  </div>
+</div>
+
+        </div>
+    <div class="back-to-top" id="back-to-top">
+            <i class="iconfont icon-up"></i>
+    </div>
+        
+    </body>
+    
+<script src="/js/jquery-3.3.1.min.js"></script>
+
+    
+<script src="/js/back-to-top.js"></script>
+
+    
+<script src="/js/scroll.js"></script>
+
+    <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": { 
+        preferredFont: "TeX", 
+        availableFonts: ["STIX","TeX"], 
+        linebreaks: { automatic:true }, 
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) 
+    },
+    tex2jax: { 
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ], 
+        processEscapes: true, 
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {  
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, 
+        Macros: { href: "{}" } 
+    },
+    messageStyle: "none"
+    }); 
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+</html>

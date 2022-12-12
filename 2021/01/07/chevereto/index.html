@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<title>chevereto图床各种疑难杂症 | Neko Alternate Blog</title>
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+    <meta name="generator" content="Hexo 5.4.2"></head>
+    <body>
+        <div class="container">
+            <header>
+<div class="main">
+<div class="title">
+    <a href="#" class="logo">Neko Alternate Blog</a>
+</div>
+<div class="site-nav">
+    <ul id="menu" class="menu">
+    
+        <li class="menu-item text-underline">
+            <a href="/">Home</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/archives">Archives</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/about/">About</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/link/">Menu.Link</a>
+        </li>
+            
+    </ul>
+</div>
+</div>
+</header>
+            <main class="main">
+                <section class="posts clearfix">
+<div class="post-wrapper">
+    <article class="post article-entry">
+    <div class="post-title">
+        chevereto图床各种疑难杂症
+    </div>
+    <p class="sub">1月 07 2021</p>
+    <div class="post-content">
+        <p>心 力 交 瘁<br>这两天真的是被这个图床搞到吐血<br>最开始是检测网站先报错 发现怎么都没法登入图库<br>api也无法使用<br>（到写这篇文章的时候所有问题还有大部分没有解决）<br>（但愿能快点解决吧）</p>
+<h2 id="问题一"><a href="#问题一" class="headerlink" title="问题一"></a>问题一</h2><p>Chevereto安装出现404</p>
+<p>这个问题算是比较好解决的 究其根本其实就是伪静态规则的错误<br>因为Chevereto是基于基于Apache环境的伪静态规则所以<br>Nginx的服务器需要重新设置伪静态规则<br>将</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">location / &#123;</span><br><span class="line">try_files $uri $uri/ /index.php?$query_string;</span><br></pre></td></tr></table></figure>
+
+<p>}</p>
+<p>加入.htaccess就行了</p>
+<h2 id="问题二"><a href="#问题二" class="headerlink" title="问题二"></a>问题二</h2><p>据测试Chevereto疑似无法在php 8.0中运行<br>换7.0以上的版本就行了</p>
+<h2 id="问题三-（玄学问题）"><a href="#问题三-（玄学问题）" class="headerlink" title="问题三 （玄学问题）"></a>问题三 （玄学问题）</h2><p>如果出现访问超时除了检查web不妨可以试试换域名 虽然不知道怎么回事 但是好像是有效的<br>神奇</p>
+<h2 id="问题四-（玄学问题）"><a href="#问题四-（玄学问题）" class="headerlink" title="问题四 （玄学问题）"></a>问题四 （玄学问题）</h2><p>当上传图片的时候如果数量巨大（比如一次上传百八十张）很有可能出现上传一般卡出的情况<br>别看<br>就是卡住了 没传上的重来吧:(<br>这种情况下 要么全删重传 要么找出没传上去的再传一遍</p>
+
+    </div>
+    </article>
+</div>
+
+    <div class="_toc">
+        <strong class="toc-title">
+        Contents
+        </strong>
+        <div class="toc-content">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%E4%B8%80"><span class="toc-text">问题一</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%E4%BA%8C"><span class="toc-text">问题二</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%E4%B8%89-%EF%BC%88%E7%8E%84%E5%AD%A6%E9%97%AE%E9%A2%98%EF%BC%89"><span class="toc-text">问题三 （玄学问题）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%E5%9B%9B-%EF%BC%88%E7%8E%84%E5%AD%A6%E9%97%AE%E9%A2%98%EF%BC%89"><span class="toc-text">问题四 （玄学问题）</span></a></li></ol>
+        </div>
+    </div>
+
+</section>
+
+
+    <nav class="post-nav">
+        
+            <div class="page-tags">
+                
+            </div>
+        
+    </nav>
+
+
+
+    <nav class="paginator clearfix">
+        
+            <a class="prev" href="/2021/01/23/mt1/">
+                <i class="iconfont icon-left"></i>
+                <span class="prev-text">漫谈 其一 《喜剧与悲剧》</span>
+            </a>
+        
+        
+            <a class="next" href="/2021/01/04/2020-2/">
+                
+                <span class="prev-text">忆 2020</span>
+                <i class="iconfont icon-right"></i>
+            </a>
+        
+    </nav>
+
+
+            </main>
+            <div class="copyright">
+  <div class="text">Powered By
+    <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/zjx137/hexo-theme-Tsu">Tsu</a> &copy 2019
+  </div>
+</div>
+
+        </div>
+    <div class="back-to-top" id="back-to-top">
+            <i class="iconfont icon-up"></i>
+    </div>
+        
+    </body>
+    
+<script src="/js/jquery-3.3.1.min.js"></script>
+
+    
+<script src="/js/back-to-top.js"></script>
+
+    
+<script src="/js/scroll.js"></script>
+
+    <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": { 
+        preferredFont: "TeX", 
+        availableFonts: ["STIX","TeX"], 
+        linebreaks: { automatic:true }, 
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) 
+    },
+    tex2jax: { 
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ], 
+        processEscapes: true, 
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {  
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, 
+        Macros: { href: "{}" } 
+    },
+    messageStyle: "none"
+    }); 
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+</html>

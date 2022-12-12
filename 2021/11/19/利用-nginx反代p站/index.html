@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<title>利用 Nginx反代p站 | Neko Alternate Blog</title>
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+    <meta name="generator" content="Hexo 5.4.2"></head>
+    <body>
+        <div class="container">
+            <header>
+<div class="main">
+<div class="title">
+    <a href="#" class="logo">Neko Alternate Blog</a>
+</div>
+<div class="site-nav">
+    <ul id="menu" class="menu">
+    
+        <li class="menu-item text-underline">
+            <a href="/">Home</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/archives">Archives</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/about/">About</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/link/">Menu.Link</a>
+        </li>
+            
+    </ul>
+</div>
+</div>
+</header>
+            <main class="main">
+                <section class="posts clearfix">
+<div class="post-wrapper">
+    <article class="post article-entry">
+    <div class="post-title">
+        利用 Nginx反代p站
+    </div>
+    <p class="sub">11月 19 2021</p>
+    <div class="post-content">
+        <blockquote>
+<p>深刻意识到，很多以前自己认为无解的问题并不是真的无解，只是自己的知识面不够而无法意识到问题的核心所在罢了。</p>
+<p>总结就一个字：菜</p>
+<p>by：<a target="_blank" rel="noopener" href="https://moe.best/author/1/">神代綺凛</a></p>
+</blockquote>
+<p>本文原作者为：神代綺凛的 <a target="_blank" rel="noopener" href="https://moe.best/technology/pixiv-proxy.html">[Pixiv] Nginx 真·反代P站</a> 次作者：losquare的 <a target="_blank" rel="noopener" href="https://90wish.ru/archives/228">使用宝塔面板快速部署 pixiv 反向代理</a></p>
+<p>本人经过简化 加入自己的理解所完成</p>
+<h2 id="警告："><a href="#警告：" class="headerlink" title="警告："></a>警告：</h2><p>《中华人民共和国计算机信息网络国际联网管理暂行规定》，其中规定了“计算机信息网络直接进行国际联网，必须使用邮电部国家公用电信网提供的国际出入口信道。任何单位和个人不得自行建立或者使用其他信道进行国际联网。”如违反上述规定，公安机关会责令停止联网，给予警告，可以并处15000元以下的罚款；有违法所得的，没收违法所得。</p>
+<p><strong><em>本文仅在技术层面进行探讨，所有内容仅供交流学习，请勿做出违反国家法律的行为</em></strong><em>！</em></p>
+<h2 id="所需资源："><a href="#所需资源：" class="headerlink" title="所需资源："></a>所需资源：</h2><ul>
+<li>  一台能够访问pixiv的主机</li>
+<li>  宝塔面板（推荐）、</li>
+<li>一个域名（二级也行）<ul>
+<li>  <strong>注意 后续均已example.com来对域名进行指代</strong></li>
+</ul>
+</li>
+</ul>
+<h2 id="泛域名解析"><a href="#泛域名解析" class="headerlink" title="泛域名解析"></a>泛域名解析</h2><p>如果你使用了一个顶级域名专门做反代:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">example.com</span><br><span class="line">*.example.com </span><br><span class="line">*.pximg.example.com</span><br></pre></td></tr></table></figure>
+
+<p>根据原作者的意思</p>
+<ul>
+<li>exmpe.com<ul>
+<li>  随意，你可以放点自己的东西做一些伪装或者说明，或者直接 301 到<a target="_blank" rel="noopener" href="http://www.example.com/">www.example.com</a></li>
+</ul>
+</li>
+<li>*.exmpe.com<ul>
+<li>  用于反代对齐 *.pixiv.net</li>
+</ul>
+</li>
+<li>*.pximg.example.com<ul>
+<li>  用于反代对齐*.pximg.net，其实该域名中的pximg也可以替换成其他的字符串，只要不与P站的二级域名服务产生冲突即可</li>
+</ul>
+</li>
+</ul>
+<p>如果你用了个正在使用的域名且不想被影响使用：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pixiv.example.com</span><br><span class="line">*.pixiv.example.com</span><br><span class="line">*.pximg.example.com</span><br></pre></td></tr></table></figure>
+
+<p>则可以这样做解析，后续配置进行替换即可</p>
+<h2 id="建立新站点"><a href="#建立新站点" class="headerlink" title="建立新站点"></a>建立新站点</h2><p>在宝塔面板中建立两个新站点</p>
+<p>第一个站点：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">example.com</span><br><span class="line">*.example.com</span><br></pre></td></tr></table></figure>
+
+<p>第二个站点：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pximg.exmple.com</span><br><span class="line">*.pximg.exmple.com</span><br></pre></td></tr></table></figure>
+
+<p>分别用来作为主站反代与图片反代</p>
+<p>参考图：</p>
+<p><img src="https://blog.neko25.top/wp-content/uploads/2021/11/833467596.png"></p>
+<h2 id="对泛域名申请ssl证书"><a href="#对泛域名申请ssl证书" class="headerlink" title="对泛域名申请ssl证书"></a>对泛域名申请ssl证书</h2><p>依次对域名进行申请，这里要注意的是泛域名只能使用dns进行解析。</p>
+<p>如果使用的域名是阿里云dns 或者cf的dns 等等被宝塔所支持接口的dns那会方便很多。</p>
+<p>如果没有，那么我们可以进行手动解析。</p>
+<p>首先勾选 DNS 验证，勾选泛解析域名，选择手动解析，然后点击开始申请，根据弹窗，前往你的 DNS 供应商处添加一条 TXT 记录(注意:再次期间不要关闭网页)，等待数分钟确保解析生效后，方可点击确认按钮完成证书申请。</p>
+<p><img src="https://blog.neko25.top/wp-content/uploads/2021/11/531825634.png"></p>
+<h2 id="修改配置文件"><a href="#修改配置文件" class="headerlink" title="修改配置文件"></a>修改配置文件</h2><p>准备：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"># *.example.com</span><br><span class="line">server</span><br><span class="line">&#123;</span><br><span class="line">    server_name ~^([^.]+)\.example\.com$;</span><br><span class="line">    set $domain $1;</span><br><span class="line"></span><br><span class="line">    resolver 8.8.8.8;</span><br><span class="line"></span><br><span class="line">    location ~ .*</span><br><span class="line">    &#123;</span><br><span class="line">        proxy_set_header Host $domain.pixiv.net;</span><br><span class="line">        proxy_set_header Referer &quot;https://www.pixiv.net&quot;;</span><br><span class="line">        proxy_cookie_domain pixiv.net example.com;</span><br><span class="line">        proxy_pass https://$domain.pixiv.net;</span><br><span class="line">        proxy_ssl_server_name on;</span><br><span class="line">        proxy_set_header Accept-Encoding &quot;&quot;;</span><br><span class="line">        proxy_redirect https://accounts.pixiv.net/ https://accounts.example.com/;</span><br><span class="line"></span><br><span class="line">        sub_filter &quot;i-cf.pximg.net&quot; &quot;i.example.com&quot;;</span><br><span class="line">        sub_filter &quot;pixiv.net&quot; &quot;example.com&quot;;</span><br><span class="line">        sub_filter &quot;pximg.net&quot; &quot;pximg.example.com&quot;;</span><br><span class="line">        # 防止错误上报暴露站点</span><br><span class="line">        sub_filter &quot;js_error.php&quot; &quot;block_js_error&quot;;</span><br><span class="line">        # 防止谷歌服务暴露站点，同时也可以加快网站加载</span><br><span class="line">        sub_filter &quot;www.google&quot; &quot;block_google&quot;;</span><br><span class="line">        sub_filter_once off;</span><br><span class="line">        sub_filter_types *;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这段是给 *.example.com 所使用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"># *.pximg.example.com</span><br><span class="line">server</span><br><span class="line">&#123;</span><br><span class="line">    server_name ~^([^.]+)\.pximg\.example\.com$;</span><br><span class="line">    set $domain $1;</span><br><span class="line"></span><br><span class="line">    resolver 8.8.8.8;</span><br><span class="line"></span><br><span class="line">    location ~ .*</span><br><span class="line">    &#123;</span><br><span class="line">        proxy_set_header Host $domain.pximg.net;</span><br><span class="line">        proxy_set_header Referer &quot;https://www.pixiv.net&quot;;</span><br><span class="line">        proxy_pass https://$domain.pximg.net;</span><br><span class="line">        proxy_ssl_server_name on;</span><br><span class="line">        proxy_set_header Accept-Encoding &quot;&quot;;</span><br><span class="line"></span><br><span class="line">        sub_filter &quot;i-cf.pximg.net&quot; &quot;i.example.com&quot;;</span><br><span class="line">        sub_filter &quot;pixiv.net&quot; &quot;example.com&quot;;</span><br><span class="line">        sub_filter &quot;pximg.net&quot; &quot;pximg.example.com&quot;;</span><br><span class="line">        # 防止错误上报暴露站点</span><br><span class="line">        sub_filter &quot;js_error.php&quot; &quot;block_js_error&quot;;</span><br><span class="line">        # 防止谷歌服务暴露站点，同时也可以加快网站加载</span><br><span class="line">        sub_filter &quot;www.google&quot; &quot;block_google&quot;;</span><br><span class="line">        sub_filter_once off;</span><br><span class="line">        sub_filter_types *;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这段是给 *.pximg.example.com 所使用</p>
+<p>注意：直接输入是没有用的 需要对所使用的域名做一个适配</p>
+<p>写入：</p>
+<p>在站点修改中找到配置文件项 在#SSL-START SSL相关配置，请勿删除或修改下一行带注释的404规则 上方加入</p>
+<p>加入方式 如图：</p>
+<p><img src="https://blog.neko25.top/wp-content/uploads/2021/11/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE-2021-11-19-105510.png"></p>
+<p>保存 修改完成</p>
+<p>访问 www.你的域名</p>
+<p><strong>注意 必须加上”www.”不然会出现502报错</strong></p>
+<p>或者可以尝试将域名301重定向到www.域名</p>
+<h2 id="登入解决方案"><a href="#登入解决方案" class="headerlink" title="登入解决方案"></a>登入解决方案</h2><p>其实原作者应该已经通过proxy_cookie_domain解决 但是在我这里并不生效。。。</p>
+<p>所以我采用的登入方案是采用EditThisCookie对源站cookie进行导出替换域名实现</p>
+<p><a target="_blank" rel="noopener" href="https://chrome.google.com/webstore/detail/editthiscookie/fngmhnnpilhplaeedifhccceomclgfbg?hl=zh-CN">下载地址</a></p>
+<p>下载安装完后 同时开启反代站和源站 开启 EditThisCookie 将源站的信息复制到反代站中</p>
+<p><img src="https://blog.neko25.top/wp-content/uploads/2021/11/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE-2021-11-19-111133-1024x549.png"></p>
+<p>注意需要点上绿色的锁</p>
+<p>刷新网站，这时候就可以正常使用了</p>
+
+    </div>
+    </article>
+</div>
+
+    <div class="_toc">
+        <strong class="toc-title">
+        Contents
+        </strong>
+        <div class="toc-content">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AD%A6%E5%91%8A%EF%BC%9A"><span class="toc-text">警告：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%80%E9%9C%80%E8%B5%84%E6%BA%90%EF%BC%9A"><span class="toc-text">所需资源：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%9B%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90"><span class="toc-text">泛域名解析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E6%96%B0%E7%AB%99%E7%82%B9"><span class="toc-text">建立新站点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9%E6%B3%9B%E5%9F%9F%E5%90%8D%E7%94%B3%E8%AF%B7ssl%E8%AF%81%E4%B9%A6"><span class="toc-text">对泛域名申请ssl证书</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-text">修改配置文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%99%BB%E5%85%A5%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="toc-text">登入解决方案</span></a></li></ol>
+        </div>
+    </div>
+
+</section>
+
+
+    <nav class="post-nav">
+        
+            <div class="page-tags">
+                
+            </div>
+        
+    </nav>
+
+
+
+    <nav class="paginator clearfix">
+        
+            <a class="prev" href="/2021/12/29/%E6%91%98%E8%AE%B0-%E7%8E%96/">
+                <i class="iconfont icon-left"></i>
+                <span class="prev-text">摘记 玖</span>
+            </a>
+        
+        
+            <a class="next" href="/2021/11/17/%E3%80%8A%E8%8B%8F%E8%8F%B2%E7%9A%84%E4%B8%96%E7%95%8C%E3%80%8B/">
+                
+                <span class="prev-text">《苏菲的世界》</span>
+                <i class="iconfont icon-right"></i>
+            </a>
+        
+    </nav>
+
+
+            </main>
+            <div class="copyright">
+  <div class="text">Powered By
+    <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/zjx137/hexo-theme-Tsu">Tsu</a> &copy 2019
+  </div>
+</div>
+
+        </div>
+    <div class="back-to-top" id="back-to-top">
+            <i class="iconfont icon-up"></i>
+    </div>
+        
+    </body>
+    
+<script src="/js/jquery-3.3.1.min.js"></script>
+
+    
+<script src="/js/back-to-top.js"></script>
+
+    
+<script src="/js/scroll.js"></script>
+
+    <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": { 
+        preferredFont: "TeX", 
+        availableFonts: ["STIX","TeX"], 
+        linebreaks: { automatic:true }, 
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) 
+    },
+    tex2jax: { 
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ], 
+        processEscapes: true, 
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {  
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, 
+        Macros: { href: "{}" } 
+    },
+    messageStyle: "none"
+    }); 
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+</html>

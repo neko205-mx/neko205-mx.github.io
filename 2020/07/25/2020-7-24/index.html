@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<title>单硬盘+uefi linux win双系统安装教程 | Neko Alternate Blog</title>
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+    <meta name="generator" content="Hexo 5.4.2"></head>
+    <body>
+        <div class="container">
+            <header>
+<div class="main">
+<div class="title">
+    <a href="#" class="logo">Neko Alternate Blog</a>
+</div>
+<div class="site-nav">
+    <ul id="menu" class="menu">
+    
+        <li class="menu-item text-underline">
+            <a href="/">Home</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/archives">Archives</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/about/">About</a>
+        </li>
+    
+        <li class="menu-item text-underline">
+            <a href="/link/">Menu.Link</a>
+        </li>
+            
+    </ul>
+</div>
+</div>
+</header>
+            <main class="main">
+                <section class="posts clearfix">
+<div class="post-wrapper">
+    <article class="post article-entry">
+    <div class="post-title">
+        单硬盘+uefi linux win双系统安装教程
+    </div>
+    <p class="sub">7月 25 2020</p>
+    <div class="post-content">
+        <p>说实话，uefi的系统是真的难装-w-<br>我用来操作的系统是mint linux 操作过程使用与所有（大概）有自主选择分区的linux系统</p>
+<h2 id="事前准备"><a href="#事前准备" class="headerlink" title="事前准备"></a>事前准备</h2><p>装linux的笔记本一台<br>u盘（起码到8g）<br>会一点点（装win系统）的电脑之时 避免搞崩了还要找人修</p>
+<h2 id="第一步-下载mint-linux"><a href="#第一步-下载mint-linux" class="headerlink" title="第一步 下载mint linux"></a>第一步 下载mint linux</h2><p><img src="https://files.catbox.moe/ro2zwy.png" alt="官网" title="官网"><br><a target="_blank" rel="noopener" href="https://www.linuxmint.com/download.php">下载地址</a><br>建议到官网下载<br>当然也可以用我的网盘<br><a target="_blank" rel="noopener" href="https://wp.neko25.xyz/%E9%95%9C%E5%83%8F%E5%BA%93/linuxmint-20-cinnamon-64bit.iso">网盘</a></p>
+<h2 id="第二步-设置分区"><a href="#第二步-设置分区" class="headerlink" title="第二步 设置分区"></a>第二步 设置分区</h2><p>这部就很简单了 到你管理里面压缩一个空白空间出来<br>不要分区 只要压缩<br>什么你不会？。。。你还是先去学习一下计算机基础把</p>
+<h2 id="第三步-写u盘"><a href="#第三步-写u盘" class="headerlink" title="第三步 写u盘"></a>第三步 写u盘</h2><p>下载u盘写入工具<br><a target="_blank" rel="noopener" href="https://rufus.ie/zh_CN.html">Rufus</a><br>当然你用别的也行<br>只要能把iso镜像写到u盘<br>不过我还是力推这个 真的好用<br>接入u盘和导入镜像后选择GPT分区类型<br>剩下的默认就好</p>
+<h2 id="第四步-选择"><a href="#第四步-选择" class="headerlink" title="第四步 选择"></a>第四步 选择</h2><p>这一步我被坑了很多次<br>就是<br>一定要进系统装系统<br>可能听这有一点懵逼<br>放图<br><img src="https://files.catbox.moe/cintyu.png" alt="选择" title="选择"><br>选择第一个 进入u盘的系统<br>进去以后就会看到个光盘<br><img src="https://files.catbox.moe/zez4cs.png" alt="系统" title="系统"><br>选择这个光盘 进入安装界面<br>旁边的语言框往下拉可以看到简体中文<br>下一步<br>键盘选择<br>如果你的键盘不是什么奇奇怪怪的键盘就直接<br>下一步<br>选择“安装多媒体编码译码器”<br>如果要输入密码不要管他<br>下一步<br>选着“其他选项”<br>双系统还会有一个“mint linux和**os共存”<br>的选项 建议手动 第一个虽然有人成功过 但是以我的经验可能不太稳定<br><img src="https://files.catbox.moe/enatee.png" alt="选择" title="选择"></p>
+<h2 id="第五步-安装类型与分区"><a href="#第五步-安装类型与分区" class="headerlink" title="第五步 安装类型与分区"></a>第五步 安装类型与分区</h2><p>到这里 你会看到两个盘（如果你分区多的话也可能是一堆）<br>找到你分出来的空白分区<br>什么？看不出来？你分区的大小总记得把 找大小<br><img src="https://files.catbox.moe/3sc1i5.png" alt="分区" title="分区"><br>因为这是虚拟机所以是空白的<br>不过都一样<br>第一步先分200mb给efi分区 很重要 一定要分<br>第二步分大概20g的分区挂载到/（如果你空间不够的话可以酌情减少）<br>第三步分你的内存的两倍给交换空间（这个大概就是用来给你电脑内存不足的情况下调用这片区域来运行程序）<br>第四步步吧剩下的空间全部分区挂载到/home（这个是你的个人空间）<br>说明一下<br>efi分区。。。 你可以不分试试<br>/分区 这个相等于系统的c盘<br>交换空间分区 大概 可能 或许 也许 可以不用分<br>/home分区 这个相当于系统的d盘</p>
+<h2 id="第六步-选择“安装启动引导器的设备”"><a href="#第六步-选择“安装启动引导器的设备”" class="headerlink" title="第六步 选择“安装启动引导器的设备”"></a>第六步 选择“安装启动引导器的设备”</h2><p>这步非常重要<br>所以单独拿出来<br>我们刚刚不是创建了200mb的efi分区吗<br>找到这个分区 看清楚设备栏的编号（注意不要和win的efi搞混了win的是500mb）<br><img src="https://files.catbox.moe/jxm4m4.png" alt="不 要 搞 混 了" title="不 要 搞 混 了"><br>看清楚以后 到下面的“安装启动引导器的设备”栏<br>选着相同的编号<br>注意了 一定要看清楚 不要眼瞎<br>选择完成以后 下一步</p>
+<h2 id="第六步-安装过程"><a href="#第六步-安装过程" class="headerlink" title="第六步 安装过程"></a>第六步 安装过程</h2><p>点击下一步<br>等待ing<br>因为需要分区加格式换所以需要点时间<br>耐心~<br>选择地区直接默认<br>下一步<br>输入密码账号<br>下一步<br>等待ing</p>
+<h2 id="第七步"><a href="#第七步" class="headerlink" title="第七步"></a>第七步</h2><p>当这些全部完成之后 会提醒你重启，把U盘拔了 点重启<br>如果卡死就强制关机重启就好</p>
+<h2 id="结尾"><a href="#结尾" class="headerlink" title="结尾"></a>结尾</h2><p>来首歌吧-v-<br>[Meting]<br>[Music server=”netease” id=”553362483” type=”song”/]<br>[/Meting]</p>
+
+    </div>
+    </article>
+</div>
+
+    <div class="_toc">
+        <strong class="toc-title">
+        Contents
+        </strong>
+        <div class="toc-content">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8B%E5%89%8D%E5%87%86%E5%A4%87"><span class="toc-text">事前准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5-%E4%B8%8B%E8%BD%BDmint-linux"><span class="toc-text">第一步 下载mint linux</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5-%E8%AE%BE%E7%BD%AE%E5%88%86%E5%8C%BA"><span class="toc-text">第二步 设置分区</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E6%AD%A5-%E5%86%99u%E7%9B%98"><span class="toc-text">第三步 写u盘</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E6%AD%A5-%E9%80%89%E6%8B%A9"><span class="toc-text">第四步 选择</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%94%E6%AD%A5-%E5%AE%89%E8%A3%85%E7%B1%BB%E5%9E%8B%E4%B8%8E%E5%88%86%E5%8C%BA"><span class="toc-text">第五步 安装类型与分区</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E5%85%AD%E6%AD%A5-%E9%80%89%E6%8B%A9%E2%80%9C%E5%AE%89%E8%A3%85%E5%90%AF%E5%8A%A8%E5%BC%95%E5%AF%BC%E5%99%A8%E7%9A%84%E8%AE%BE%E5%A4%87%E2%80%9D"><span class="toc-text">第六步 选择“安装启动引导器的设备”</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E5%85%AD%E6%AD%A5-%E5%AE%89%E8%A3%85%E8%BF%87%E7%A8%8B"><span class="toc-text">第六步 安装过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%83%E6%AD%A5"><span class="toc-text">第七步</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E5%B0%BE"><span class="toc-text">结尾</span></a></li></ol>
+        </div>
+    </div>
+
+</section>
+
+
+    <nav class="post-nav">
+        
+            <div class="page-tags">
+                
+            </div>
+        
+    </nav>
+
+
+
+    <nav class="paginator clearfix">
+        
+            <a class="prev" href="/2020/08/06/2020-8-05/">
+                <i class="iconfont icon-left"></i>
+                <span class="prev-text">2020-8-05</span>
+            </a>
+        
+        
+            <a class="next" href="/2020/07/19/2020-7-18/">
+                
+                <span class="prev-text">2020-7-18</span>
+                <i class="iconfont icon-right"></i>
+            </a>
+        
+    </nav>
+
+
+            </main>
+            <div class="copyright">
+  <div class="text">Powered By
+    <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> | Theme <a target="_blank" rel="noopener" href="https://github.com/zjx137/hexo-theme-Tsu">Tsu</a> &copy 2019
+  </div>
+</div>
+
+        </div>
+    <div class="back-to-top" id="back-to-top">
+            <i class="iconfont icon-up"></i>
+    </div>
+        
+    </body>
+    
+<script src="/js/jquery-3.3.1.min.js"></script>
+
+    
+<script src="/js/back-to-top.js"></script>
+
+    
+<script src="/js/scroll.js"></script>
+
+    <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": { 
+        preferredFont: "TeX", 
+        availableFonts: ["STIX","TeX"], 
+        linebreaks: { automatic:true }, 
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) 
+    },
+    tex2jax: { 
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ], 
+        processEscapes: true, 
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {  
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, 
+        Macros: { href: "{}" } 
+    },
+    messageStyle: "none"
+    }); 
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+</html>
