@@ -1,0 +1,21 @@
+<!DOCTYPE html>  
+<html>  
+<head>  
+    <title>根据用户输入修改自身</title>  
+    <script>  
+        function updatePage() {  
+            var userInput = document.getElementById("userInput").value;  
+            document.getElementById("output").innerHTML = userInput;  
+        }  
+    </script>  
+</head>  
+<body>  
+    <h1>请输入文本：</h1>  
+    <input type="text" id="userInput">  
+    <button onclick="updatePage()">修改页面</button>  
+    <p id="output"></p>  
+    
+</body>  
+</html>
+
+
